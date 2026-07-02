@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -6,10 +6,11 @@
 <title>JACK1 • 미국주식 포트폴리오</title>
 <script>
 /* 자동 버전 갱신 — 패치 배포 시 고객 브라우저가 자동으로 최신본 로드 */
-const APP_VERSION='2026-07-01-82';
+const APP_VERSION='2026-07-01-136';
 (function(){try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d&&d.v&&d.v!==APP_VERSION&&!/[?&]v=/.test(location.search)){location.replace(location.pathname+'?v='+encodeURIComponent(d.v));}}).catch(function(){});}catch(e){}})();
 </script>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="readable.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -178,15 +179,15 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
     </div>
     <div id="guideBody" style="padding:0 20px 18px;font-size:13px;color:#94a3b8;line-height:1.75">
       <div style="background:rgba(16,185,129,.06);border-left:3px solid #10b981;border-radius:8px;padding:12px 14px;margin-bottom:14px;color:#e2e8f0">
-        <b style="color:#10b981">핵심:</b> 단계는 "좋다/나쁘다"가 아니라 <b>투자 논리(테제 — "왜 사는가")가 얼마나 검증됐고 가격에 얼마나 실렸는가</b>를 나타냅니다.
-        <b style="color:#f87171">4단계(수확 검토) = 나쁜 회사가 아니라 가격이 과열</b>, <b>0단계(관찰) = 부실이 아니라 아직 관찰 중</b>.
+        <b style="color:#10b981">핵심:</b> 단계는 "좋다/나쁘다"가 아니라 <b>투자 이유("왜 사는가")가 얼마나 검증됐고 가격에 얼마나 실렸는가</b>를 나타냅니다.
+        <b style="color:#f87171">4단계(팔기) = 나쁜 회사가 아니라 가격이 과열</b>, <b>0단계(관찰) = 부실이 아니라 아직 관찰 중</b>.
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
         <div style="padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px"><b style="color:#64748b">0단계(관찰)</b><br><span style="font-size:11px">투자 논리 가설 단계. 아직 신호 없음</span></div>
         <div style="padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px"><b style="color:#4a9eff">1단계(미검증)</b><br><span style="font-size:11px">저점 다지기, 초기 신호 포착</span></div>
-        <div style="padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px"><b style="color:#10b981">2단계(적립)</b><br><span style="font-size:11px">추정치 상향 시작, 돌파</span></div>
-        <div style="padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px"><b style="color:#c9a84c">3단계(유지)</b><br><span style="font-size:11px">추세·실적 검증, 본격 상승</span></div>
-        <div style="padding:10px 12px;background:rgba(248,113,113,.06);border-radius:8px"><b style="color:#f87171">4단계(수확 검토)</b><br><span style="font-size:11px">주가&gt;목표가, 환희. 추격 주의</span></div>
+        <div style="padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px"><b style="color:#10b981">2단계(사기)</b><br><span style="font-size:11px">추정치 상향 시작, 돌파</span></div>
+        <div style="padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px"><b style="color:#c9a84c">3단계(들기)</b><br><span style="font-size:11px">추세·실적 검증, 본격 상승</span></div>
+        <div style="padding:10px 12px;background:rgba(248,113,113,.06);border-radius:8px"><b style="color:#f87171">4단계(팔기)</b><br><span style="font-size:11px">주가&gt;목표가, 환희. 추격 주의</span></div>
       </div>
       <div style="font-size:11px;color:#475569;margin-top:12px">📊 각 탭의 단계 배지는 입력하신 종목을 이 틀로 자동 분류한 결과입니다. 매수·매도 신호가 아니라 "지금 어느 구간인가"의 지도입니다. · 자세히: 전략단계 탭</div>
     </div>
@@ -200,7 +201,7 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
     </div>
     <div id="glossaryBody" style="display:none;padding:0 18px 16px">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px">
-        <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:9px 11px"><b style="color:#c9a84c;font-size:12px">테제 (투자 논리)</b><div style="font-size:11px;color:#94a3b8;margin-top:2px">"이 종목으로 왜·어떻게 돈 버는가"의 한 줄 가설. 이게 깨지면 파는 이유가 됨.</div></div>
+        <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:9px 11px"><b style="color:#c9a84c;font-size:12px">투자 이유</b><div style="font-size:11px;color:#94a3b8;margin-top:2px">"이 종목으로 왜·어떻게 돈 버는가"의 한 줄 가설. 이게 깨지면 파는 이유가 됨.</div></div>
         <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:9px 11px"><b style="color:#c9a84c;font-size:12px">자금줄</b><div style="font-size:11px;color:#94a3b8;margin-top:2px">이 회사 매출이 흘러나오는 돈의 원천(예: AI 투자비, 정부 예산). 같은 자금줄=같이 움직임.</div></div>
         <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:9px 11px"><b style="color:#c9a84c;font-size:12px">밸류체인 / 병목</b><div style="font-size:11px;color:#94a3b8;margin-top:2px">제품이 만들어지는 사슬에서 공급이 달려 가격을 올릴 수 있는 길목. 마진이 고이는 위치.</div></div>
         <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:9px 11px"><b style="color:#c9a84c;font-size:12px">단계목표</b><div style="font-size:11px;color:#94a3b8;margin-top:2px">종목상한 2·3=15% / 4=10%. 단계합 권장 10~25 / 30~50 / 25~45%.</div></div>
@@ -275,12 +276,25 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
   </div>
   <!-- 벤치마크 비교 위젯 -->
   <div id="benchmark-widget" class="glass" style="border-radius:16px;padding:18px 22px;margin-bottom:20px;border:1px solid rgba(255,255,255,.07)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
       <div style="font-size:12px;font-weight:700;letter-spacing:.1em;color:#475569;text-transform:uppercase">📊 포트폴리오 vs 벤치마크</div>
       <button onclick="refreshBenchmark()" class="btn-ghost" style="font-size:11px;padding:5px 11px"><i class="fa-solid fa-rotate" id="benchRefreshIcon"></i> 갱신</button>
     </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <span style="font-size:11px;color:#64748b">투자 기간</span>
+      <input id="bench-from" type="date" onchange="saveBenchDates()" style="font-size:12px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e2e8f0">
+      <span style="font-size:11px;color:#475569">~</span>
+      <input id="bench-to" type="date" onchange="saveBenchDates()" style="font-size:12px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e2e8f0">
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+        <button onclick="setBenchPreset('1m')" class="btn-ghost" style="font-size:10px;padding:4px 9px">1M</button>
+        <button onclick="setBenchPreset('3m')" class="btn-ghost" style="font-size:10px;padding:4px 9px">3M</button>
+        <button onclick="setBenchPreset('6m')" class="btn-ghost" style="font-size:10px;padding:4px 9px">6M</button>
+        <button onclick="setBenchPreset('1y')" class="btn-ghost" style="font-size:10px;padding:4px 9px">1Y</button>
+        <button onclick="setBenchPreset('ytd')" class="btn-ghost" style="font-size:10px;padding:4px 9px">YTD</button>
+      </div>
+    </div>
     <div id="benchmark-bars" style="display:flex;flex-direction:column;gap:10px">
-      <div style="font-size:12px;color:#334155;text-align:center">갱신 버튼을 눌러 벤치마크 비교를 로드하세요</div>
+      <div style="font-size:12px;color:#334155;text-align:center">기간을 설정하고 갱신 버튼을 눌러 누적 수익률을 비교하세요</div>
     </div>
   </div>
   <!-- 단계별 비중 시스템 (manual v4.1) -->
@@ -359,11 +373,11 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
   </div>
   <!-- AI capex 집중도 위젯 -->
   <div id="insight-capex-bar" style="margin-bottom:16px"></div>
-  <!-- 테제 건강도 콕핏 (전 종목 한눈 스코어) -->
+  <!-- 투자 이유 점검 콕핏 (전 종목 한눈 스코어) -->
   <div id="insight-thesis-cockpit" style="margin-bottom:16px"></div>
   <!-- M7·정부 협업 생태계 맵 -->
   <div id="insight-ecosystem" style="margin-bottom:16px"></div>
-  <!-- 반론 스틸맨 (가장 강한 약세론) -->
+  <!-- 투자 가설 검증 (성장 논리 시험) -->
   <div id="insight-bearcase" style="margin-bottom:16px"></div>
   <!-- 내러티브 생애주기 (소로스 재귀성 곡선) -->
   <div id="insight-narrative" style="margin-bottom:16px"></div>
@@ -425,17 +439,17 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
           <div style="color:#64748b;font-size:10px;margin-top:3px">탐색 포지션. 킬신호 발동 시 전량 매도.</div>
         </div>
         <div style="background:rgba(16,185,129,.08);border-radius:8px;padding:10px;border-left:3px solid #10b981">
-          <div style="font-weight:700;color:#10b981;margin-bottom:4px">2단계(적립)</div>
+          <div style="font-weight:700;color:#10b981;margin-bottom:4px">2단계(사기)</div>
           <div style="color:#94a3b8">종목당: <span style="color:#e2e8f0;font-weight:700">8~15%</span></div>
           <div style="color:#64748b;font-size:10px;margin-top:3px">투자 논리 반증 없음 + 추정치 상향 확인 시 확대.</div>
         </div>
         <div style="background:rgba(201,168,76,.08);border-radius:8px;padding:10px;border-left:3px solid #c9a84c">
-          <div style="font-weight:700;color:#c9a84c;margin-bottom:4px">3단계(유지)</div>
+          <div style="font-weight:700;color:#c9a84c;margin-bottom:4px">3단계(들기)</div>
           <div style="color:#94a3b8">종목당: <span style="color:#e2e8f0;font-weight:700">15~25%</span></div>
           <div style="color:#64748b;font-size:10px;margin-top:3px">풀포지션 영역. 단일종목 ≤25% 초과 금지.</div>
         </div>
         <div style="background:rgba(248,113,113,.08);border-radius:8px;padding:10px;border-left:3px solid #f87171">
-          <div style="font-weight:700;color:#f87171;margin-bottom:4px">4단계(수확 검토)</div>
+          <div style="font-weight:700;color:#f87171;margin-bottom:4px">4단계(팔기)</div>
           <div style="color:#94a3b8">종목당: <span style="color:#e2e8f0;font-weight:700">10~20%↓ 트리밍</span></div>
           <div style="color:#64748b;font-size:10px;margin-top:3px">신규 진입 자제. 킬신호 발동 즉시 50% 이상 축소.</div>
         </div>
@@ -639,7 +653,7 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
       <b style="color:#fbbf24">레짐:</b> 골디락스·슬로다운 베팅 → <b style="color:#f87171">리플레이션/스태그 사분면 진입</b>(아래 신호등 우측). 고멀티플·pre-profit이 구조적으로 취약해지는 국면.<br>
       <b style="color:#10b981">판정:</b> 복귀 신호 <b>2/3 동시</b>(6/4~5 capex둔화 #2 + 인플레/매파 #3) → <b style="color:#f87171">리스크오프 임계 도달</b>. 단 개별 킬 신호 부재 → 패닉매도 X.<br>
       <b style="color:#4a9eff">함의(틀):</b> ①신규 pre-profit·고멀티플은 듀레이션 압축에 가장 취약 ②실적·백로그 보유주가 상대 방어 ③금리내성 현금수취자가 인플레 국면에 유리.<br>
-      <b style="color:#10b981">★ 6/17~19 갱신:</b> 이란 MOU 서명·유가 -11% → 점도표 stale·시나리오 B 트리거 = <b style="color:#10b981">매크로 역풍 완화</b>. AI 인프라 대표주 나스닥100 편입(6/22). 단 AVGO capex 미스로 <b style="color:#fbbf24">AI capex ROI 리스크는 잔존</b> → 7월말 하이퍼스케일러가 확정타.
+      <b style="color:#10b981">★ 6/17~19 갱신:</b> 이란 MOU 서명·유가 -11% → 점도표 stale·시나리오 B 트리거 = <b style="color:#10b981">매크로 조정 압력 완화</b>. AI 인프라 대표주 나스닥100 편입(6/22). 단 AVGO capex 미스로 <b style="color:#fbbf24">AI capex ROI 검증 포인트는 잔존</b> → 7월말 하이퍼스케일러가 확정타.
     </div>
     <div style="font-size:10px;color:#334155;margin-top:8px">⚠ 두 스위치 분기: 인플레/Fed=개선(이란) · AI capex=잔존위험(AVGO·FCF -90% 우려). 이 틀로 보면 비-AI·실적보유주가 방어 역할.</div>
   </div>
@@ -655,9 +669,9 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
     <div style="font-size:11px;color:#64748b;line-height:1.5;margin-bottom:10px">종목을 고르기 전에 <b style="color:#10b981">"우리가 어느 사분면에 있는가"</b>를 먼저 묻는다 — 같은 포트도 국면마다 이기는 버킷이 다르다. <b style="color:#c9a84c">● 현재 추정</b> 배지가 켜진 칸이 지금 판정 국면이다. 클릭하면 그 국면 시나리오를 AI가 전개.</div>
     <div id="regime-current"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="regime-quad-grid">
-      <div id="regime-q-goldilocks" class="regime-quad" data-regime="goldilocks" onclick="runScenarioSim('골디락스 국면(성장↑+인플레↓) 지속 — AI capex 견조 + 디스인플레 동시. 이 국면에서 2027버킷 고멀티플 4종목이 멀티플·추정치 동시 상승하는 경로와, 환희 구간 진입 시 4단계 수확 트리거 점검 시점을 분석')" style="padding:12px 14px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.25);border-radius:11px" onmouseover="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(16,185,129,.12)'" onmouseout="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(16,185,129,.06)'">
+      <div id="regime-q-goldilocks" class="regime-quad" data-regime="goldilocks" onclick="runScenarioSim('골디락스 국면(성장↑+인플레↓) 지속 — AI capex 견조 + 디스인플레 동시. 이 국면에서 2027버킷 고멀티플 4종목이 멀티플·추정치 동시 상승하는 경로와, 환희 구간 진입 시 4단계 팔기 트리거 점검 시점을 분석')" style="padding:12px 14px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.25);border-radius:11px" onmouseover="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(16,185,129,.12)'" onmouseout="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(16,185,129,.06)'">
         <div style="font-size:11px;font-weight:700;color:#10b981;margin-bottom:3px">🟢 골디락스 — 성장↑ 인플레↓</div>
-        <div style="font-size:10px;color:#94a3b8;line-height:1.5">고멀티플 성장주 최적. <b>2027버킷·pre-profit 듀레이션 전부 승.</b> 가장 위험한 건 역설적으로 이때 — 환희가 4단계 수확 신호를 가린다.</div>
+        <div style="font-size:10px;color:#94a3b8;line-height:1.5">고멀티플 성장주 최적. <b>2027버킷·pre-profit 듀레이션 전부 승.</b> 가장 위험한 건 역설적으로 이때 — 환희가 4단계 팔기 신호를 가린다.</div>
       </div>
       <div id="regime-q-reflation" class="regime-quad" data-regime="reflation" onclick="runScenarioSim('리플레이션 국면(성장↑+인플레↑) — 경기·물가 동반 상승, 금리 상방 압력. 이 국면에서 pre-profit 장기듀레이션(pre-profit 종목)이 할인율에 눌리는 반면 실적·백로그 보유 종목(방어 방산주)이 상대 우위를 점하는 경로 분석')" style="padding:12px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:11px" onmouseover="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(251,191,36,.12)'" onmouseout="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(251,191,36,.06)'">
         <div style="font-size:11px;font-weight:700;color:#fbbf24;margin-bottom:3px">🟡 리플레이션 — 성장↑ 인플레↑</div>
@@ -667,9 +681,9 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
         <div style="font-size:11px;font-weight:700;color:#4a9eff;margin-bottom:3px">🔵 슬로다운 — 성장↓ 인플레↓</div>
         <div style="font-size:10px;color:#94a3b8;line-height:1.5">인하하나 이유가 둔화. 멀티플↑ vs 추정치↓ 충돌. <b>AI capex 가이던스가 진짜 변수 — 2027버킷 60% 동시 위험.</b> 현금·방어 우위.</div>
       </div>
-      <div id="regime-q-stagflation" class="regime-quad" data-regime="stagflation" onclick="runScenarioSim('스태그플레이션 국면(성장↓+인플레↑) — 최악 조합. 할인율↑와 capex 삭감이 동시에 오는 시나리오, 포트에서 살아남는 유일한 자산(방어 방산주 백로그·정부예산 격리 자산)과 가장 먼저 무너지는 자산의 순서, 현금 비중 확대 판단 기준 분석')" style="padding:12px 14px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:11px" onmouseover="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(248,113,113,.12)'" onmouseout="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(248,113,113,.06)'">
+      <div id="regime-q-stagflation" class="regime-quad" data-regime="stagflation" onclick="runScenarioSim('스태그플레이션 국면(성장↓+인플레↑) — 까다로운 조합. 할인율↑와 capex 삭감이 동시에 오는 시나리오, 포트에서 상대 강세를 보일 자산(방어 방산주 백로그·정부예산 격리)과 먼저 재점검할 자산 순서, 현금 비중 판단 기준 분석')" style="padding:12px 14px;background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:11px" onmouseover="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(248,113,113,.12)'" onmouseout="if(!this.classList.contains('regime-quad-active'))this.style.background='rgba(248,113,113,.06)'">
         <div style="font-size:11px;font-weight:700;color:#f87171;margin-bottom:3px">🔴 스태그플레이션 — 성장↓ 인플레↑</div>
-        <div style="font-size:10px;color:#94a3b8;line-height:1.5">할인율↑ + capex 삭감 동시 = 최악. <b>거의 전부 하락, 방어버킷·정부예산 격리만 상대 방어.</b> 현금이 포지션이 되는 유일한 국면.</div>
+        <div style="font-size:10px;color:#94a3b8;line-height:1.5">할인율↑ + capex 삭감 동시 — 까다로운 국면. <b>방어버킷·정부예산 격리 자산이 상대 강세, 성장주는 재점검 구간.</b> 현금·방어 비중을 늘릴 수 있는 시기.</div>
       </div>
     </div>
     <div id="regime-rationale" style="margin-top:14px"></div>
@@ -694,7 +708,7 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
         <div style="font-size:12px;font-weight:700;color:#10b981;margin-bottom:8px">📉 50bp 인하 — 두 갈래</div>
         <div style="font-size:11px;color:#94a3b8;line-height:1.65">
           <div style="margin-bottom:8px"><b style="color:#10b981">① 성장 유지(소프트랜딩):</b> 할인율↓ + AI capex 지속 → 2027 AI capex 버킷 멀티플·추정치 동시↑. <b>최적</b>.</div>
-          <div><b style="color:#f87171">② 침체 대응:</b> 할인율↓ <span style="color:#f87171">but</span> 하이퍼스케일러 capex 가이던스 하향 우려 → 멀티플 확장과 추정치 하향이 <b>충돌</b>. pre-profit 종목(희석·지연) 최악, 정부예산 종목 RPO 위험.</div>
+          <div><b style="color:#fbbf24">② 침체 대응:</b> 할인율↓ <span style="color:#fbbf24">but</span> 하이퍼스케일러 capex 가이던스 하향 우려 → 멀티플 확장과 추정치 하향이 <b>충돌</b>. pre-profit 종목(희석·지연) 재점검, 정부예산 종목 RPO 확인.</div>
         </div>
       </div>
       <!-- 인상 분기 -->
@@ -920,7 +934,7 @@ window.addEventListener('load',function(){ if(typeof PROXY_URL!=='undefined'&&PR
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <div style="padding:11px 13px;background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.15);border-radius:10px">
         <div style="font-size:11px;font-weight:700;color:#f87171;margin-bottom:4px">🔴 과열 단계 — 비대칭 ↓ (하방 큼)</div>
-        <div style="font-size:10px;color:#94a3b8;line-height:1.6"><span class="mono" style="color:#c9a84c">4단계 과열·고멀티플 종목</span> — 기대치 만개. 비트=주가 무덤덤(이미 반영), 미스·가이던스 실망=급락. <b>플레이: 실적 전 일부 트림 검토</b>(4-A는 추정치 상향 지속 시 홀드). 콜에서 톤 다운 한 단어가 -10%. <span style="color:#fbbf24">검증 완료 종목은 잠복→과열로 재분류될 수 있음(주가가 테제를 선반영)</span>.</div>
+        <div style="font-size:10px;color:#94a3b8;line-height:1.6"><span class="mono" style="color:#c9a84c">4단계 과열·고멀티플 종목</span> — 기대치 만개. 비트=주가 무덤덤(이미 반영), 미스·가이던스 실망=급락. <b>플레이: 실적 전 일부 트림 검토</b>(4-A는 추정치 상향 지속 시 홀드). 콜에서 톤 다운 한 단어가 -10%. <span style="color:#fbbf24">검증 완료 종목은 잠복→과열로 재분류될 수 있음(기대가 주가에 먼저 반영됨)</span>.</div>
       </div>
       <div style="padding:11px 13px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.15);border-radius:10px">
         <div style="font-size:11px;font-weight:700;color:#10b981;margin-bottom:4px">🟢 잠복·인식 단계 — 비대칭 ↑ (상방 큼)</div>
@@ -1472,7 +1486,7 @@ function loader(){return'<div class="insight-loader"><div class="typing-dot"></d
 function getStagemeta(){try{return JSON.parse(localStorage.getItem('j1_stagemeta')||'{}');}catch(e){return{};}}
 /* 실적일 표시: 미래만 D-카운트, 과거/분기추정은 라벨만 (AI 생성 날짜 안전 처리) */
 function eDday(date){if(!date)return'';const t=new Date(date).getTime();if(isNaN(t))return' | 실적 '+date+'(추정)';const d=Math.round((t-Date.now())/864e5);return d<0?' | 실적 '+date+'(지난 분기)':' | 실적D-'+d+'('+date+')';}
-const STAGE_NAMES=['관찰','미검증','적립','유지','수확 검토'];
+const STAGE_NAMES=['관찰','미검증','사기','들기','팔기'];
 function stageLabel(n){n=+n||0;return n+'단계('+((STAGE_NAMES[n])||'?')+')';}
 function parseStageBucketVal(bk){
   if(bk==null||bk==='')return null;
@@ -1487,17 +1501,21 @@ function parseStageBucketVal(bk){
 function stageBucketClr(st){return {2:'#10b981',3:'#c9a84c',4:'#f87171'}[st]||'#64748b';}
 function stageBucketLabel(bk){const st=parseStageBucketVal(bk);return st?`${st}단계`:(bk||'미정');}
 
-/* 모든 AI 프롬프트에 주입하는 공통 렌즈 — 연봉 100억 PM 수준 사고 + 베스트셀러 교차검증 + 다단계 상상(2·3차 파급) */
+/* 모든 AI 프롬프트에 주입하는 공통 렌즈 — TEAM JACK1 틀(월가 PM 수준 사고) + 베스트셀러 교차검증 + 다단계 상상(2·3차 파급). 사용자 출력에 PM 금지 */
+const READABILITY_RULES=window.READABILITY_RULES||'';
+const OPTIMISM_FRAMING_RULES=window.OPTIMISM_FRAMING_RULES||'';
 const EXPERT_LENS=`[분석 기준 — 반드시 적용, 어기면 출력 무효]
-- 연봉 100억 PM처럼: 1차 효과에서 멈추지 말고 2~3차 파급까지 "상상"하라. 예) 금리 인하: 1차="할인율↓→성장주 멀티플↑", 2차="근데 왜 인하했나? 경기둔화가 이유라면 멀티플 확장과 이익추정 하향이 동시에 옴 — 둘 중 뭐가 이기나", 3차="이 종목의 자금줄(고객사 capex/소비자 지갑)이 그 경기둔화에 얼마나 민감한가". 이 사슬을 짧게라도 명시할 것.
+${READABILITY_RULES}
+${OPTIMISM_FRAMING_RULES}
+- TEAM JACK1 틀처럼(월가 PM 수준 사고): 1차 효과에서 멈추지 말고 2~3차 파급까지 "상상"하라. 예) 금리 인하: 1차="할인율↓→성장주 멀티플↑", 2차="근데 왜 인하했나? 경기둔화가 이유라면 멀티플 확장과 이익추정 하향이 동시에 옴 — 둘 중 뭐가 이기나", 3차="이 종목의 자금줄(고객사 capex/소비자 지갑)이 그 경기둔화에 얼마나 민감한가". 이 사슬을 짧게라도 명시할 것.
 - 금리·매크로는 방향(상승/하락)만 말하지 말고 "이 종목에 한해 그 메커니즘이 실제로 어느 경로로 작동하는가"를 짚어라. 적자성장주(할인율 민감) vs 현금흐름주(실적 민감) vs 원자재(달러·수요 민감)는 같은 금리 뉴스에도 다르게 반응 — 일반론·복붙 금지.
 - 베스트셀러 교차검증(서로 충돌 시 아래 우선순위로 자기모순 없이 통합 — 둘 다 인용해놓고 결론에서 무시하지 말 것):
-  1) 가격(밸류에이션=그레이엄 안전마진·린치 PEG)과 검증도(=테제가 입증된 단계)는 별개 축이다. "좋은 회사"와 "좋은 가격"을 섞어서 한 줄 결론으로 뭉개지 마라.
+  1) 가격(밸류에이션=그레이엄 안전마진·린치 PEG)과 검증도(=투자 이유가 입증된 단계)는 별개 축이다. "좋은 회사"와 "좋은 가격"을 섞어서 한 줄 결론으로 뭉개지 마라.
   2) 컨센서스와 같은 결론이면 분석이 아니라 복붙이다(하워드 막스 2단계 사고) — 시장 평균 시각과 무엇이 다른지 한 줄은 반드시 포함.
-  3) "안 잃는 것"이 "더 버는 것"보다 우선이다(김승호·모건 하우절) — 장밋빛 시나리오를 쓴 만큼 파국 시나리오(추정치 꺾임·고객 이탈·멀티플 디레이팅)도 동급 분량으로 다뤄라.
+  3) 성장 가설(업사이드)을 먼저 명확히 쓰고, 가설 검증 포인트는 짧게(업사이드:검증 ≈ 2:1). 자본 보존은 중요하지만 비관 서사로 결론을 좁히지 말 것 — 조정 국면도 기회가 될 수 있음을 열어두라(김승호·모건 하우절).
   4) 사이클은 반드시 되돌아온다(막스) — "이번엔 다르다"류 결론을 쓰려면 반증 가능한 구체 근거를 같이 대라, 없으면 쓰지 마라.
 - 같은 템플릿 답을 종목마다 복붙하지 마라. 자금줄·고객 구조·밸류에이션·재무체력이 다르면 같은 매크로 이벤트에도 결론이 달라야 정상이다.
-- 단계목표(v4.0): 2단계 15%·3단계 45%·4단계 40%(합100%). G3s 결정트리 ①~⑦ 위에서 첫 매칭만(⑧ 폐지). 2단계=G3s≤1 적립. 출력에 triggered_rule 필수.
+- 단계목표(v4.0): 2단계 15%·3단계 45%·4단계 40%(합100%). G3s 결정트리 ①~⑦ 위에서 첫 매칭만(⑧ 폐지). 2단계=G3s≤1 사기. 출력에 triggered_rule 필수.
 - G3s=G3 모멘텀 레벨(감쇠형, 상한4). 「연속」금지. G3=1→min(4,G3s+1), G3=0→max(0,G3s−1). 4-A 좀비 방지.
 - G3: 종목별 실적+3TD 갱신(이벤트). 단계·리밸·Drift는 분기 마지막 거래일 일괄(§A.10). 실적 떠도 기준일 전 리밸 금지(킬 제외).
 - G2 히스테리시스: 편입≥임계, 이탈<임계−1%p, 띠=직전유지(OPM 4~5% 등). G1과 동일 병.
@@ -1511,30 +1529,30 @@ function parseJSONArray(raw){
   return JSON.parse(m[0]);
 }
 function fmtPMBullets(txt){
-  return txt.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
-    const m=l.replace(/^[-•]\s*/,'').match(/^([^:：]{2,14})[:：]\s*(.*)$/);
-    if(m) return `<div style="margin-bottom:6px"><span style="color:#c9a84c;font-weight:700;font-size:11px">${m[1]}</span> <span style="color:#94a3b8">${m[2]}</span></div>`;
-    return `<div style="margin-bottom:6px;color:#94a3b8">${l.replace(/^[-•]\s*/,'')}</div>`;
-  }).join('');
+  if(typeof fmtReadable==='function'){
+    return fmtReadable(txt,{labelColor:'#c9a84c',bodyColor:'#94a3b8',maxLen:42,esc:s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')});
+  }
+  return String(txt||'').split('\n').map(l=>`<div style="margin-bottom:8px;line-height:1.72;color:#94a3b8">${l}</div>`).join('');
 }
 /* 돌발 이벤트 전용 — 쉬운말 블록 강조 */
 function fmtUnschedBullets(txt){
-  const esc=s=>(s||'').replace(/</g,'&lt;');
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const bodyFmt=s=>typeof fmtProseBody==='function'?fmtProseBody(s,42,esc):esc(s);
   return txt.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
     const m=l.replace(/^[-•]\s*/,'').match(/^([^:：]{2,12})[:：]\s*(.*)$/);
-    if(!m)return`<div style="margin-bottom:6px;color:#94a3b8;font-size:12px;line-height:1.65">${esc(l.replace(/^[-•]\s*/,''))}</div>`;
+    if(!m)return`<div style="margin-bottom:8px;color:#94a3b8;font-size:12px;line-height:1.72">${bodyFmt(l.replace(/^[-•]\s*/,''))}</div>`;
     const label=m[1].replace(/\s/g,'');
-    const body=esc(m[2]);
+    const body=bodyFmt(m[2]);
     if(/쉬운|쉬운말|한줄요약|한줄결론|초보/.test(label)){
       return`<div style="margin:8px 0 10px;padding:10px 12px;background:rgba(74,158,255,.06);border:1px solid rgba(74,158,255,.18);border-radius:10px;border-left:3px solid #4a9eff">
         <div style="font-size:10px;font-weight:700;color:#4a9eff;margin-bottom:5px">💡 쉬운 말</div>
-        <div style="font-size:12px;color:#cbd5e1;line-height:1.7">${body}</div>
+        <div class="rd-body" style="font-size:12px;color:#cbd5e1;line-height:1.72">${body}</div>
       </div>`;
     }
     const clr=label==='돌발이벤트'?'#f87171':/포트/.test(label)?'#c9a84c':label==='전망'?'#10b981':label==='주의'?'#fbbf24':'#c9a84c';
-    return`<div style="margin-bottom:8px">
-      <span style="color:${clr};font-weight:700;font-size:11px;display:block;margin-bottom:3px">${esc(m[1])}</span>
-      <span style="color:#94a3b8;font-size:12px;line-height:1.65">${body}</span>
+    return`<div class="rd-row" style="margin-bottom:10px">
+      <div class="rd-label" style="color:${clr};font-size:11px;font-weight:700;margin-bottom:4px">${esc(m[1])}</div>
+      <div class="rd-body" style="color:#94a3b8;font-size:12px;line-height:1.72">${body}</div>
     </div>`;
   }).join('');
 }
@@ -1966,7 +1984,7 @@ async function runRebAI(){
   const aiPct=tot>0?Math.round(aiW/tot*100):0;
   try{
     const txt=await callLLM(
-`당신은 연봉 100억 월가 PM입니다. ${todayStr} 기준 아래 포트폴리오의 단계 기반 비중 조언을 한국어로 작성하세요.
+`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 기준 아래 포트폴리오의 단계 기반 비중 조언을 한국어로 작성하세요.
 ${EXPERT_LENS}
 
 [포트폴리오 현황]
@@ -2033,7 +2051,7 @@ function renderHoldingsTable(){
   if(!portfolio.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:#475569;padding:40px 0;font-size:13px">보유 종목이 없습니다.</td></tr>';return;}
   const stagemeta=getStagemeta();
   const SC_H=['#64748b','#4a9eff','#10b981','#d9a943','#f5733f'];
-  const SN_H=['관찰','미검증','적립','유지','수확'];
+  const SN_H=['관찰','미검증','사기','들기','팔기'];
   tbody.innerHTML=portfolio.map((h,i)=>{
     const val=h.price*h.qty,ret=((h.price-h.avg)/h.avg)*100,pnl=(h.price-h.avg)*h.qty;
     const wt=tv>0?val/tv*100:0,dchg=h.dailyChg||0;
@@ -2128,7 +2146,7 @@ async function watchlistInsight(i){
   w.insight=loader()+' 분석 중...';renderWatchlist();
   try{
     const txt=await callLLM(
-      `당신은 연봉 100억 수준의 월가 PM입니다. 관심종목 ${w.ticker}를 포트폴리오 편입 관점에서 분석해주세요.
+      `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. 관심종목 ${w.ticker}를 포트폴리오 편입 관점에서 분석해주세요.
 ${stageCtx}
 ${memoCtx}
 ${killCtx}
@@ -2407,7 +2425,7 @@ function buildPortfolioRebEvents(today){
   const events=[];const earnRaw=[];
 
   portfolio.filter(h=>(sm[h.ticker]||{}).kill).forEach(h=>{
-    events.push({date:today,title:`${h.ticker} 킬신호 발동`,reason:'테제 붕괴·강등 검토 — 단계 무관 즉시 이탈 검토',clr:'#f87171',urgent:true,cat:'portfolio',tickers:[h.ticker],subtype:'kill'});
+    events.push({date:today,title:`${h.ticker} 킬신호 발동`,reason:'투자 이유 무너짐·강등 검토 — 단계 무관 즉시 이탈 검토',clr:'#f87171',urgent:true,cat:'portfolio',tickers:[h.ticker],subtype:'kill'});
   });
 
   portfolio.forEach(h=>{
@@ -2442,7 +2460,7 @@ function buildPortfolioRebEvents(today){
     const date=iso&&iso>=today?iso:new Date(Date.now()+14*864e5).toISOString().slice(0,10);
     if(events.some(ev=>ev.subtype==='harvest'&&ev.tickers&&ev.tickers[0]===h.ticker))return;
     events.push({
-      date,title:`${h.ticker} 4단계 수확 점검`,
+      date,title:`${h.ticker} 4단계 팔기 점검`,
       reason:`4-B 15% 트림 또는 4-A 무트림 ride(레버리지 없음) — 밸류: ${mm.val||'미평가'}, 추정치 방향 확인`,
       clr:'#c9a84c',cat:'portfolio',tickers:[h.ticker],subtype:'harvest'
     });
@@ -2822,9 +2840,9 @@ const SHOCK_DEFS={
   rateCutSoft:     {label:'금리 -50bp (소프트랜딩)',  ch:{capex:+6,rate:+12}, note:'성장 유지 인하 — 멀티플·추정치 동시 상승. 장기듀레이션일수록 리레이팅 폭 큼.'},
   rateCutRecession:{label:'금리 -50bp (침체 대응)',   ch:{capex:-16,rate:+8}, note:'막스 2차 레벨: 인하인데 하락 — "왜 내렸는가"가 1차 효과(할인율↓)를 압도. 멀티플↑와 추정치↓의 충돌.'},
   alabKill:        {label:'코어 종목 킬신호 발동',         ch:{capex:-6,rate:0},  note:'최대고객 집중 35%+ & 분산 실패 — 동일 자금줄(코어 연결주·클라우드주)로 "고객집중 재평가" 전염.'},
-  ionqRpo:         {label:'선행주 수주(RPO) 역성장',          ch:{qtm:-28,rate:0},   note:'선행 베팅(최장듀레이션) 테제 직격. 단 비중·자금줄 격리로 포트 전염 제한적 — 격리 설계가 작동하는 케이스.'},
+  ionqRpo:         {label:'선행주 수주(RPO) 역성장',          ch:{qtm:-28,rate:0},   note:'선행 베팅(최장듀레이션) 핵심 논리 직격. 단 비중·자금줄 격리로 포트 전염 제한적 — 격리 설계가 작동하는 케이스.'},
   defenseCut:      {label:'국방예산 삭감',            ch:{def:-18,rate:0},   note:'방산주 백로그 방어선 시험 + 양자 선행주 국방계약 갱신 위험. 2027버킷은 무풍 — 자금줄 분산의 가치.'},
-  aiBoom:          {label:'AI 수요 서프라이즈 (상방)', ch:{capex:+20,rate:0,qtm:+8}, note:'상방 충격도 전파된다 — 단 4단계 환희 구간 진입 시 원칙5(수확 트리거) 점검 대상.'},
+  aiBoom:          {label:'AI 수요 서프라이즈 (상방)', ch:{capex:+20,rate:0,qtm:+8}, note:'상방 충격도 전파된다 — 단 4단계 환희 구간 진입 시 원칙5(팔기 트리거) 점검 대상.'},
   spcxIpo:         {label:'SPCX 상장 여파', ch:{spc:+8,capex:+2}, note:'대형 우주기업 상장 밸류 앵커 → 우주 섹터 멀티플 상향 + 우주주 희소성 부각. 2차 반전: 기관 우주 배분을 빨아들이면 중소형 우주주 자금 이탈(crowding out) — 상장 후 주가 방향이 섹터 유동성 신호.'},
   iranMou:         {label:'이란-미국 MOU 서명', ch:{def:-8,rate:+6,capex:+3}, note:'호르무즈 개방→유가↓→CPI 완화→인하 경로 강화(성장주 멀티플↑). 방산 센티먼트 단기↓ but 방산주는 EW 업그레이드(전훈 반영) 구조라 플랫폼 방산보다 둔감. 2차 반전: 60일 시한부 MOU — 결렬 시 정반대 스윙, "평화 랠리"를 구조적으로 착각하지 말 것.'},
 };
@@ -2930,7 +2948,7 @@ async function runScenarioSim(preset){
   const todayStr=new Date().toISOString().slice(0,10);
   try{
     const txt=await callLLM(
-      `당신은 연봉 100억 수준의 헤지펀드 PM입니다. 다음 가설적 시나리오가 ${todayStr} 기준 발생했다고 가정하고 한국어로 분석해주세요. 이는 가설적 시뮬레이션이며 투자 권유가 아닙니다.
+      `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. 다음 가설적 시나리오가 ${todayStr} 기준 발생했다고 가정하고 한국어로 분석해주세요. 이는 가설적 시뮬레이션이며 투자 권유가 아닙니다.
 
 [시나리오] ${scenario}
 [현재 보유 포트폴리오 — 단계/자금줄/킬신호] ${portfolioCtx}
@@ -2940,7 +2958,7 @@ ${EXPERT_LENS}
 1차충격: 가장 먼저 영향받을 보유 종목과 방향(상승/하락) — 그 메커니즘 경로 한 줄(왜 그 종목인가)
 2차파급: 시장이 1차충격에 "왜 그 일이 일어났는가"를 되묻기 시작하면 뒤집히는 지점 — 상상해서 짚을 것 (예: 인하의 이유가 경기둔화라면 멀티플 확장과 추정치 하향이 충돌)
 단계영향: 단계 이동(상승 또는 킬신호 후보)이 발생할 수 있는 종목과 이유 — 종목별로 다르게
-파국분기점: 이 시나리오가 가장 나쁜 쪽으로 틀어질 경우 어떤 보유종목의 어떤 가정이 깨지는지 (장밋빛만 쓰지 말 것)
+가설검증: 이 시나리오에서 성장 가정이 깨질 수 있는 지점 — 어떤 보유종목의 어떤 전제를 오늘부터 점검할지 (업사이드만 쓰지 말 것)
 확률판단: 현재 시점 이 시나리오의 발생 가능성에 대한 독립적 추정 (낮음/중간/높음 + 근거 한 줄, 컨센서스와 다르면 왜 다른지)
 마크다운, 별표 없이 "라벨: 내용" 줄바꿈 형식만 사용.`);
     el.innerHTML=`<div style="font-size:11px;color:#c9a84c;margin-bottom:8px">📌 시나리오: ${scenario}</div>`+fmtPMBullets(txt);
@@ -2967,7 +2985,7 @@ async function analyzeEventImpact(idx){
   }).join('\n');
   try{
     const raw=await callLLM(
-      `당신은 연봉 100억 수준의 월가 PM입니다. 아래 매크로 이벤트가 보유 포트폴리오 각 종목의 "단계 이동" 또는 "킬신호 발동"에 미치는 영향을 분석하세요.
+      `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. 아래 매크로 이벤트가 보유 포트폴리오 각 종목의 "단계 이동" 또는 "킬신호 발동"에 미치는 영향을 분석하세요.
 
 [이벤트] ${ev.date} ${ev.title} (영향도: ${ev.impact}${ev.desc?', '+ev.desc:''})
 
@@ -3058,17 +3076,17 @@ function renderInsightCapexBar(){
   </div>`;
 }
 
-/* ─── 투자 논리 건강도 — 4축 평가 (manual.md 철학) ───
- * 축1 테제 검증도(30%): 단계=검증 지도. 2단계 스위트스폿 최고, 4단계=수확 신호
+/* ─── 투자 이유 점검 — 4축 평가 (manual.md 철학) ───
+ * 축1 투자 이유 검증도(30%): 단계=검증 지도. 2단계 스위트스폿 최고, 4단계=팔기 신호
  * 축2 추정치 모멘텀(30%): "추정치가 아직 오르나?" — 승급/강등·킬 트리거
  * 축3 밸류 오버레이(25%): 검증≠가격. 과열·4단계 레버리지 감점
  * 축4 포지션·프레임(15%): 단계별 비중(15/45/40)·자금줄·단계목표 기록
  */
 const THESIS_AXES=[
-  {id:'verify',label:'테제 검증도',w:.30,hint:'2단계=스위트스폿. 4단계=수확·회전 신호'},
+  {id:'verify',label:'투자 이유 검증도',w:.30,hint:'2단계=스위트스폿. 4단계=팔기·회전 신호'},
   {id:'estrev',label:'추정치 모멘텀',w:.30,hint:'승급/강등 트리거·킬 OFF 여부'},
   {id:'value',label:'밸류 오버레이',w:.25,hint:'과열(반영됨)·레버리지=리스크'},
-  {id:'frame',label:'포지션·프레임',w:.15,hint:'비중 상한·자금줄·테제 기록'}
+  {id:'frame',label:'포지션·프레임',w:.15,hint:'비중 상한·자금줄·투자 이유 기록'}
 ];
 const STAGE_VERIFY_SCORE=[20,52,92,76,55];
 const STAGE_WT_BANDS=[
@@ -3098,12 +3116,12 @@ function calcThesisHealth(mm,h,ctx){
 
   let v2=55;
   detail.estrev.push({l:'추정치 중립 기준',pts:55,base:true});
-  if(mm.kill){v2=5;detail.estrev=[{l:'킬신호 ON — 테제 붕괴',pts:5,base:true}];flags.push('kill');}
+  if(mm.kill){v2=5;detail.estrev=[{l:'킬신호 ON — 투자 이유 무너짐',pts:5,base:true}];flags.push('kill');}
   else{
     if(mm.demote){
       let pen=-18;
       if(_thRx(/멈춤|꺾|하향|미스|컷|역성장|nrr|축소|지연/i,mm.demote))pen=-32;
-      if(_thRx(/테제|반증|이탈/i,mm.demote))pen=-40;
+      if(_thRx(/투자 이유|반증|이탈/i,mm.demote))pen=-40;
       v2+=pen;detail.estrev.push({l:'강등 트리거',pts:pen});
     }
     if(mm.promo){
@@ -3124,7 +3142,7 @@ function calcThesisHealth(mm,h,ctx){
   if(val==='과열(반영됨)'){v3=22;detail.value=[{l:'과열(반영됨)',pts:22,base:true}];flags.push('overval');}
   else if(val==='저평가'){v3=90;detail.value=[{l:'저평가 — 안전마진',pts:90,base:true}];}
   else if(val==='적정'){v3=72;detail.value=[{l:'적정 밸류',pts:72,base:true}];}
-  if(st===4&&val==='과열(반영됨)'){v3=Math.max(5,v3-12);detail.value.push({l:'4단계+과열 — 수확 우선',pts:-12});}
+  if(st===4&&val==='과열(반영됨)'){v3=Math.max(5,v3-12);detail.value.push({l:'4단계+과열 — 팔기 우선',pts:-12});}
   const lev=+mm.lev||1;
   if(lev>1&&st>=3){
     const lp=st===4?-35:-18;
@@ -3143,11 +3161,11 @@ function calcThesisHealth(mm,h,ctx){
   if(mm.money){v4+=8;detail.frame.push({l:'자금줄 분류됨',pts:8});}
   else{v4-=6;detail.frame.push({l:'자금줄 미분류',pts:-6});}
   if(mm.chain){v4+=6;detail.frame.push({l:'밸류체인 위치 기재',pts:6});}
-  if(ctx.thesis&&ctx.thesis.length>10){v4+=5;detail.frame.push({l:'단계목표 테제 기재',pts:5});}
+  if(ctx.thesis&&ctx.thesis.length>10){v4+=5;detail.frame.push({l:'단계목표 투자 이유 기재',pts:5});}
   if(ctx.tgt>0){
     const diff=wt-ctx.tgt;
     if(diff>5){v4-=8;detail.frame.push({l:`목표비중 대비 과대 (+${diff.toFixed(1)}%p)`,pts:-8});}
-    else if(diff<-8&&st<=2){v4+=4;detail.frame.push({l:'목표 미달 — 적립 여지',pts:4});}
+    else if(diff<-8&&st<=2){v4+=4;detail.frame.push({l:'목표 미달 — 사기 여지',pts:4});}
   }
   axes.frame=Math.max(0,Math.min(100,Math.round(v4)));
 
@@ -3159,7 +3177,7 @@ function calcThesisHealth(mm,h,ctx){
   score=Math.max(5,Math.min(98,score));
 
   let verdict='';
-  if(mm.kill)verdict='위험 — 킬신호 발동, 테제 붕괴 검토';
+  if(mm.kill)verdict='위험 — 킬신호 발동, 투자 이유 무너짐 검토';
   else if(score>=72)verdict='건강 — 검증 진행·추정치 유효';
   else if(score>=55)verdict='양호 — 관찰 유지, 다음 검증 대기';
   else if(score>=40)verdict='주의 — 추정치·밸류·비중 점검';
@@ -3169,7 +3187,7 @@ function calcThesisHealth(mm,h,ctx){
 }
 function _thScClr(s){return s>=72?'#10b981':s>=55?'#fbbf24':'#f87171';}
 
-/* ─── 테제 건강도 콕핏 ─── */
+/* ─── 투자 이유 점검 콕핏 ─── */
 function renderThesisCockpit(){
   const el=document.getElementById('insight-thesis-cockpit');
   if(!el)return;
@@ -3200,7 +3218,7 @@ function renderThesisCockpit(){
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <i class="fa-solid fa-heart-pulse" style="color:${avgClr};font-size:13px"></i>
-        <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#e2e8f0">투자 논리 건강도 (4축)</span>
+        <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#e2e8f0">투자 이유 점검 (4축)</span>
         <span style="font-size:10px;color:#475569">검증도 30% · 추정치 30% · 밸류 25% · 프레임 15%</span>
       </div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
@@ -3232,7 +3250,7 @@ function renderThesisCockpit(){
         </div>`;}).join('')}
     </div>
     <div id="thesis-breakdown" style="display:none;margin-top:10px"></div>
-    <div style="font-size:10px;color:#334155;margin-top:9px;line-height:1.5">📊 카드 클릭 → 4축 상세. 좌측=위험 우선. 핵심 질문: <b>"추정치가 아직 오르나?"</b> — 멈추면 강등·킬 검토. 4단계는 수확 신호(건강≠고점 매수). 손익률은 점수에 미반영.</div>
+    <div style="font-size:10px;color:#334155;margin-top:9px;line-height:1.5">📊 카드 클릭 → 4축 상세. 좌측=위험 우선. 핵심 질문: <b>"추정치가 아직 오르나?"</b> — 멈추면 강등·킬 검토. 4단계는 팔기 신호(건강≠고점 매수). 손익률은 점수에 미반영.</div>
   </div>`;
 }
 function showThesisScore(tk){
@@ -3265,7 +3283,7 @@ function showThesisScore(tk){
       <span class="mono" style="color:${sc}">${r.score}${h.rawScore!==r.score?` ← ${h.rawScore}`:''}</span>
     </div>
     ${r.stageWhy?`<div style="font-size:11px;color:#64748b;margin-top:10px;line-height:1.6"><b style="color:#94a3b8">단계 근거:</b> ${r.stageWhy}</div>`:''}
-    <div style="font-size:10px;color:#334155;margin-top:8px;line-height:1.5">⚠ 4축 참고 지표 — 매매 신호 아님. 킬신호 ON→28점 상한. 추정치 모멘텀 &lt;35→42점 상한. manual: 테제 반증·추정치 정체 시 단계 무관 이탈 검토.</div>
+    <div style="font-size:10px;color:#334155;margin-top:8px;line-height:1.5">⚠ 4축 참고 지표 — 매매 신호 아님. 킬신호 ON→28점 상한. 추정치 모멘텀 &lt;35→42점 상한. manual: 투자 이유 틀림·추정치 정체 시 단계 무관 이탈 검토.</div>
   </div>`;
   el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -3314,7 +3332,7 @@ function renderEcosystemMap(){
   </div>`;
 }
 
-/* ─── 반론 스틸맨 — 종목별 가장 강한 약세론 + "반론이 맞다면 보일 증거" ─── */
+/* ─── 투자 가설 검증 — 성장 논리를 시험할 핵심 반론 + "가설이 틀리면 보일 증거" ─── */
 const BEAR_STEEL={};
 function renderBearCase(){
   const el=document.getElementById('insight-bearcase');
@@ -3326,20 +3344,20 @@ function renderBearCase(){
   el.innerHTML=`<div style="background:rgba(255,255,255,.04);border:1px solid rgba(248,113,113,.14);border-radius:14px;padding:16px 18px">
     <div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="localStorage.setItem('j1_bear_open','${open?'0':'1'}');renderBearCase()">
       <i class="fa-solid fa-scale-unbalanced" style="color:#f87171;font-size:13px"></i>
-      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#e2e8f0">반론 스틸맨 — 내 포지션에 대한 가장 강한 약세론</span>
-      <span style="font-size:10px;color:#475569">확증편향 백신 · 분기 1회 정독</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#e2e8f0">투자 가설 검증 — 성장 논리를 시험할 핵심 반론</span>
+      <span style="font-size:10px;color:#475569">확증편향 점검 · 분기 1회 정독</span>
       <span style="margin-left:auto;color:#475569;font-size:12px">${open?'▲ 접기':'▼ 펼치기'}</span>
     </div>
-    ${open?`<div style="font-size:10px;color:#64748b;margin:10px 0 12px;line-height:1.5">약한 반론을 이기는 건 의미가 없다 — <b style="color:#f87171">가장 강한 반론</b>을 적어두고, 그 반론이 맞다면 보일 증거를 감시한다. 증거가 나타나면 반론이 이긴 것: 그때는 논쟁이 아니라 매도가 답이다. 다윈: "내 이론에 불리한 사실은 즉시 메모했다 — 유리한 것보다 빨리 잊히기 때문에."</div>
+    ${open?`<div style="font-size:10px;color:#64748b;margin:10px 0 12px;line-height:1.5">성장 가설을 더 단단히 하려면 <b style="color:#4a9eff">핵심 검증 포인트</b>를 미리 적어둔다. 반론이 맞다면 보일 선행 신호를 감시하고, 증거가 쌓이면 가설을 수정한다 — 업사이드 논리를 지키되, 근거 없이 고집하지 않는다. 다윈: "내 이론에 불리한 사실은 즉시 메모했다 — 유리한 것보다 빨리 잊히기 때문에."</div>
     <div style="display:flex;flex-direction:column;gap:8px">
       ${tickers.map(tk=>{const b=BEAR_STEEL[tk];return `
         <div style="padding:10px 12px;background:rgba(255,255,255,.02);border-left:3px solid rgba(248,113,113,.4);border-radius:8px">
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
             <span class="mono" style="font-size:12px;font-weight:700;color:#c9a84c">${tk}</span>
-            <span style="font-size:10px;color:#f87171;font-weight:700">약세론 스틸맨</span>
+            <span style="font-size:10px;color:#4a9eff;font-weight:700">검증 포인트</span>
           </div>
           <div style="font-size:11px;color:#94a3b8;line-height:1.6;margin-bottom:6px">"${b.bear}"</div>
-          <div style="font-size:10px;color:#64748b;line-height:1.5"><b style="color:#fbbf24">⚠ 이 반론이 맞다면 보일 증거:</b> ${b.evidence}</div>
+          <div style="font-size:10px;color:#64748b;line-height:1.5"><b style="color:#fbbf24">🔍 가설이 틀리면 먼저 보일 신호:</b> ${b.evidence}</div>
         </div>`;}).join('')}
     </div>`:''}
   </div>`;
@@ -3363,7 +3381,7 @@ function renderDeepDive(){
   el.innerHTML=`<div style="background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.16);border-radius:14px;padding:16px 18px">
     <div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="localStorage.setItem('j1_dd_open','${open?'0':'1'}');renderDeepDive()">
       <i class="fa-solid fa-book-open-reader" style="color:#c9a84c;font-size:13px"></i>
-      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#e2e8f0">딥다이브 요약 — 투자 논리·약세론·다음 검증·실적 if/then</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#e2e8f0">딥다이브 요약 — 투자 논리·검증 포인트·다음 검증·실적 if/then</span>
       <span style="font-size:10px;color:#475569">reports/deep-dive 압축</span>
       <span style="margin-left:auto;color:#475569;font-size:12px">${open?'▲ 접기':'▼ 펼치기'}</span>
     </div>
@@ -3378,7 +3396,7 @@ function renderDeepDive(){
             <span style="font-size:10px;color:#94a3b8">${d.thesis}</span>
           </div>
           <div style="font-size:10px;color:#94a3b8;line-height:1.6">
-            <div><span style="color:#f87171;font-weight:700">약세론:</span> ${d.bear}</div>
+            <div><span style="color:#4a9eff;font-weight:700">검증 포인트:</span> ${d.bear}</div>
             <div><span style="color:#4a9eff;font-weight:700">다음검증:</span> ${d.watch}</div>
             <div><span style="color:#fbbf24;font-weight:700">if 킬:</span> ${d.ifkill}</div>
             <div><span style="color:#475569">역사유비:</span> ${d.hist}</div>
@@ -3616,7 +3634,7 @@ async function updateInsights(){
     const _bucketCtx=mm.bucket?`[단계목표] ${stageBucketLabel(mm.bucket)} (15/45/40)\n[보유 thesis] ${_tbHi.thesis||'미정의'}\n[다음 마일스톤] ${_tbHi.milestone||'미정의'}`:'';
     try{
       const txt=await callLLM(
-        `당신은 연봉 100억 수준의 월스트리트 PM입니다. ${h.ticker} (${h.sector} 섹터)를 ${todayStr} 기준 한국어로 분석해주세요.
+        `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${h.ticker} (${h.sector} 섹터)를 ${todayStr} 기준 한국어로 분석해주세요.
 매수 평균가 $${h.avg}, 현재가 $${h.price}, 수익률 ${((h.price-h.avg)/h.avg*100).toFixed(1)}%.
 [사용자 단계 판정] ${stageCtx}
 [킬신호 정의] ${_kd}
@@ -3688,7 +3706,7 @@ ${EXPERT_LENS}
 단계근거: 언제(어느 시기·계기)부터 현재 단계로 봤는지 + 한 단계 위(예 3→4단계)로 올라가려면 어떤 신호가 필요한지(객관 지표)
 모멘텀: 가장 최근의 결정적 뉴스(있으면 위 [최근 뉴스] 활용) + 앞으로 예상되는 가장 결정적인 이벤트/뉴스
 가격의미: 현재 주가가 무엇을 반영하는지(과열/적정/저평가) + 가장 유사한 경쟁 종목 1개와 밸류에이션 비교(차이점)
-타깃근거: 왜 ${mm.bucket||'그 분기'}를 수확 목표로 보는지(어떤 촉매·re-rating이 그때 도달하는지)
+타깃근거: 왜 ${mm.bucket||'그 분기'}를 팔기 목표로 보는지(어떤 촉매·re-rating이 그때 도달하는지)
 매수시점: 지금부터 목표 직전까지 분할 적립이 기본. 추가로 관측 틀(예 RSI 과매도·주요 이동평균선 아래 눌림) — 테마·변동성 고려한 분할 적립 가이드(단정 아님)
 매도시점: 목표 분기 중 언제 수익실현 검토가 합리적인지 — 실적 발표 전 트림 vs 호재·과열 시 트림, 어느 쪽이 이 종목 성격에 맞나
 분기시나리오: 현재 분기부터 목표 분기까지, 각 분기에 어떤 뉴스/이벤트로 가격·단계가 어떻게 움직일 수 있는지 경로(분기별 짧게)
@@ -3716,7 +3734,7 @@ async function runKillCheck(idx){
 
   try{
     const txt=await callLLM(
-      `당신은 포트폴리오 리스크 담당 PM입니다. ${h.ticker}의 킬신호 현황을 점검하세요.
+      `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${h.ticker}의 킬신호 현황을 점검하세요.
 현재 단계: ${stage}단계(${STAGE_NAMES[stage]}) | 자금줄: ${mm.money||'미분류'} | 현재 킬신호 플래그: ${mm.kill?'🔴 ON':'⬜ OFF'}
 킬신호 정의: ${killDef}
 ${EXPERT_LENS}
@@ -3775,7 +3793,7 @@ async function genBriefing(){
   const _tbCtxBrief=`[단계별 비중 v4.0] 15/45/40 | G3s=모멘텀L(상한4) | 2단계=G3s≤1 | 분기말 일괄리밸 | 자금줄 8분화`;
   try{
     const txt=await callLLM(
-      `당신은 월가 PM 수준으로 사고하지만 출력은 원시인처럼 투박하게 핵심만 쓰는 애널리스트입니다. 아래 데이터로 ${todayStr} 기준 포트 점검 briefing을 정확히 아래 고정 포맷 그대로 작성하세요. 군더더기·서론·인사 금지. 각 줄 한 줄씩만.
+      `당신은 TEAM JACK1 틀(월가 PM 수준)로 사고하지만 사용자 출력에 PM 금지, 출력은 원시인처럼 투박하게 핵심만 쓰는 애널리스트입니다. 아래 데이터로 ${todayStr} 기준 포트 점검 briefing을 정확히 아래 고정 포맷 그대로 작성하세요. 군더더기·서론·인사 금지. 각 줄 한 줄씩만.
 
 ${_tbCtxBrief}
 [보유종목 — 단계/자금줄/킬신호/비중/수익률]
@@ -3813,7 +3831,7 @@ async function genDeepDiagnosis(){
     const er=EARN_MAP_R?.[h.ticker];
     const dday=er?Math.max(0,Math.round((new Date(earnDateToISO(er.date)||'2099-01-01')-new Date())/864e5)):null;
     const tbh=_tbDeep.find(x=>x.ticker===h.ticker)||{};
-    const bucketLine=tbh.bucketYear?`  버킷: ${tbh.bucketYear} TARGET(${tbh.bucketWeight}%) | 테제: ${tbh.thesis||'미정의'} | 마일스톤: ${tbh.milestone||'미정의'}`:'';
+    const bucketLine=tbh.bucketYear?`  버킷: ${tbh.bucketYear} TARGET(${tbh.bucketWeight}%) | 투자 이유: ${tbh.thesis||'미정의'} | 마일스톤: ${tbh.milestone||'미정의'}`:'';
     return `${h.ticker}(${+mm.stage||0}단계, 비중${getWeight(h).toFixed(1)}%, 수익률${ret}%, 킬:${mm.kill?'🔴ON':'없음'}, 밸류:${mm.val||'미평가'})\n  킬신호: ${kd}${er?`\n  다음실적: ${er.date}(D-${dday}) — ${er.note}`:''}${bucketLine?'\n'+bucketLine:''}`;
   }).join('\n\n');
 
@@ -3823,12 +3841,12 @@ async function genDeepDiagnosis(){
 
   try{
     const txt=await callLLM(
-`당신은 연봉 100억 월가 PM입니다. ${todayStr} 기준 v4.0 단계별 비중(15/45/40) 포트폴리오 심층 진단을 수행하세요.
+`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 기준 v4.0 단계별 비중(15/45/40) 포트폴리오 심층 진단을 수행하세요.
 ${EXPERT_LENS}
 [운용 지평] 2026Q3~2027Q2. 단기 노이즈 무관. 구조적 레짐 변화만 집중.
-[단계목표] 2단계 15%·3단계 45%·4단계 40% | G3s≤1=2단계 적립 | G3s·자금줄 8분화
+[단계목표] 2단계 15%·3단계 45%·4단계 40% | G3s≤1=2단계 사기 | G3s·자금줄 8분화
 
-[포트폴리오 전체 — 단계/비중/수익률/킬신호/버킷/테제/마일스톤]
+[포트폴리오 전체 — 단계/비중/수익률/킬신호/버킷/투자 이유/마일스톤]
 ${ctx}
 
 [집중도] AI capex ${aiPct}% / 비-AI ${100-aiPct}% | THEME_CAP 70%
@@ -3839,7 +3857,7 @@ ${ctx}
 3. 30일내 버킷 분기점 — 포트 전체에서 가장 큰 방향 전환 이벤트 + 시나리오 2개(Bull/Bear)
 4. 포지션 사이징 진단 — Lynch "비중은 확신도 비례·단계 반비례" 기준으로 지금 비중이 비합리적인 종목
 5. 하워드 막스 2단계 사고 — 컨센서스가 이미 반영한 것 vs 시장이 아직 모르는 것 (이 포트 보유 종목 한정)
-6. AI capex 마스터스위치 점검 — hyperscaler 4사 최근 capex 방향 + 보유 비중상 AI capex 집중도와 그 테제 생존 여부
+6. AI capex 마스터스위치 점검 — hyperscaler 4사 최근 capex 방향 + 보유 비중상 AI capex 집중도와 그 투자 이유 유지 여부
 7. 다음 30일 급여 투입 우선순위 — 2단계(⑥·미달) 1순위, 3단계(⑤·미달) 2순위. 4단계·킬신호 ON 제외.
 
 마크다운·별표 없이. 각 항목 2~3줄 이내.`,1100);
@@ -3892,7 +3910,7 @@ ${EXPERT_LENS}
 5. 방산/국방 예산 레짐 — MRCY(2028TARGET) 백로그 지속성에 미치는 6개월 영향
 6. AI 규제 레짐(미국·EU) — AMBA Edge AI, NBIS 클라우드에 대한 구조적 tailwind/headwind
 7. 반컨센서스: 시장이 현재 가장 잘못 가격화한 것 한 가지 — 이 포트 어느 버킷에 직접 닿는지
-8. 파국 시나리오: 2027TARGET 60%가 동시에 틀리는 전제 조건 — 킬신호 발동 경보
+8. 가설 검증: 2027TARGET 60% 가정이 동시에 틀릴 수 있는 조건 — 선행 신호 체크
 마크다운 없이 자연스러운 한국어 문장으로만 작성.`,1100);
     el.innerHTML=`<div style="line-height:1.8">${macroTxt.replace(/\n/g,'<br>')}</div>`;
   }catch(e){el.innerHTML=`<div style="color:#f87171">⚠ ${e.message}</div>`;return;}
@@ -3976,7 +3994,7 @@ async function runCapexSwitchAI(){
   const killCtx=killList.map(tk=>{const h=portfolio.find(x=>x.ticker===tk);const mm=sm[tk]||{};return h?`${tk}(${+mm.stage||0}단계, ${getWeight(h).toFixed(1)}%, 킬:${mm.kill?'🔴ON':'없음'})`:null;}).filter(Boolean).join(', ');
   try{
     const txt=await callLLM(
-`당신은 연봉 100억 월가 PM입니다. ${todayStr} 기준 하이퍼스케일러 AI capex 마스터스위치 상태를 진단하세요.
+`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 기준 하이퍼스케일러 AI capex 마스터스위치 상태를 진단하세요.
 ${EXPERT_LENS}
 
 [포트 컨텍스트] AI capex 노출 ${aiPct}% | AI capex 자금줄 종목: ${killCtx||'없음'}
@@ -4030,7 +4048,7 @@ async function runCPIImpactAI(){
   }).join('\n');
   const fomc='FOMC(6/17) D-7 — 점도표 포함. CPI 결과가 인하 횟수 컨센서스(2회→1회 조정 위험)에 직결.';
   const prompt=cpiKnown
-    ?`당신은 연봉 100억 월가 PM입니다. ${todayStr} 5월 CPI 발표치 ${cpiLabel} 기준 내 포트폴리오 영향을 분석하세요.
+    ?`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 5월 CPI 발표치 ${cpiLabel} 기준 내 포트폴리오 영향을 분석하세요.
 ${EXPERT_LENS}
 
 [오늘 발표 수치] 5월 CPI ${cpiLabel} — ${scenarioLabel[cpiScenario]}
@@ -4045,7 +4063,7 @@ ${portCtx}
 FOMC연계: 이 CPI가 6/17 FOMC 점도표에 미치는 영향 + 내 포트 AI capex 버킷 2차 파급
 킬신호교차: CPI 결과가 기존 킬신호를 앞당기거나 완화하는 종목 + 구체 조건
 즉각행동: 오늘~FOMC(6/17) 전까지 해야 할 단 하나의 행동 + 그 판단을 뒤집을 반대신호`
-    :`당신은 연봉 100억 PM입니다. ${todayStr} 5월 CPI 발표일 — 수치 미확인 상태에서 3가지 시나리오별 포트폴리오 영향을 분석하세요.
+    :`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 5월 CPI 발표일 — 수치 미확인 상태에서 3가지 시나리오별 포트폴리오 영향을 분석하세요.
 ${EXPERT_LENS}
 [FOMC 연계] ${fomc}
 [포트폴리오] ${portCtx}
@@ -4101,7 +4119,7 @@ async function fetchTheme(theme){
     :'';
   try{
     const txt=await callLLM(
-      `당신은 연봉 100억 수준의 월가 PM입니다. ${todayStr} 기준 "${theme}" 테마의 자금흐름을 한국어로 분석해주세요.
+      `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 기준 "${theme}" 테마의 자금흐름을 한국어로 분석해주세요.
 
 [롤링 버킷 포트폴리오 — 단계/자금줄/버킷/킬신호/실적D-day]
 ${tickerCtx}
@@ -4339,7 +4357,7 @@ function computeRegimeAssessment(){
   if(snap.qqq&&snap.qqq.dp!=null){
     const dp=snap.qqq.dp;
     if(dp>0.3){gScore+=0.45;reasons.push({axis:'성장',dir:'↑',txt:`나스닥(QQQ) 당일 ${dp>=0?'+':''}${dp.toFixed(2)}% — 위험자산 수요 유지`,src:'실시간'})}
-    else if(dp<-0.3){gScore-=0.45;reasons.push({axis:'성장',dir:'↓',txt:`나스닥(QQQ) 당일 ${dp.toFixed(2)}% — 성장주 약세`,src:'실시간'})}
+    else if(dp<-0.3){gScore-=0.45;reasons.push({axis:'성장',dir:'↓',txt:`나스닥(QQQ) 당일 ${dp.toFixed(2)}% — 성장주 단기 조정`,src:'실시간'})}
     else{reasons.push({axis:'성장',dir:'→',txt:`나스닥(QQQ) 당일 ${dp>=0?'+':''}${dp.toFixed(2)}% — 방향 중립`,src:'실시간'})}
   }else{reasons.push({axis:'성장',dir:'?',txt:'나스닥(QQQ) 미조회 — 상단 지표 갱신 필요',src:'대기'})}
   if(snap.spy&&snap.spy.dp!=null){
@@ -4350,7 +4368,7 @@ function computeRegimeAssessment(){
   }
   if(snap.vix&&snap.vix.dp!=null){
     const dp=snap.vix.dp;
-    if(dp>2){gScore-=0.35;reasons.push({axis:'성장',dir:'↓',txt:`VIX ${dp>=0?'+':''}${dp.toFixed(2)}% — 공포·변동성 확대`,src:'실시간'})}
+    if(dp>2){gScore-=0.35;reasons.push({axis:'성장',dir:'↓',txt:`VIX ${dp>=0?'+':''}${dp.toFixed(2)}% — 변동성 확대`,src:'실시간'})}
     else if(dp<-2){gScore+=0.15;reasons.push({axis:'성장',dir:'↑',txt:`VIX ${dp.toFixed(2)}% — 리스크 심리 완화`,src:'실시간'})}
   }
   if(snap.tnx&&snap.tnx.changePct!=null){
@@ -4551,40 +4569,166 @@ async function refreshMacroIndicators(){
   if(typeof renderRegimeSignal==='function')renderRegimeSignal();
 }
 
-/* ─── 벤치마크 비교 위젯 ─── */
-/* Yahoo YTD 수익률 (Finnhub 캔들 유료화 대응 · 무료 CORS 프록시) */
-async function fetchYtdReturn(sym){
-  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=ytd`;
-  const proxies=[`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,`https://corsproxy.io/?${encodeURIComponent(url)}`];
-  for(const p of proxies){
+/* ─── 벤치마크 비교 위젯 — 기간별 누적 수익률 ─── */
+const BENCH_PREFS_KEY='j1_bench_range';
+const BENCH_LIST=[
+  {sym:'SPY',label:'S&P 500'},
+  {sym:'QQQ',label:'나스닥 100'},
+  {sym:'KOSPI',label:'코스피',naver:true,yahoo:'^KS11'}
+];
+function benchFmtISO(d){return d.toISOString().slice(0,10);}
+function benchIsoToTs(iso){return Math.floor(new Date(iso+'T12:00:00').getTime()/1000);}
+function initBenchDates(){
+  let from,to;
+  try{const p=JSON.parse(localStorage.getItem(BENCH_PREFS_KEY)||'{}');from=p.from;to=p.to;}catch(e){}
+  if(!from||!to){
+    const end=new Date();end.setDate(end.getDate()-1);
+    const start=new Date(end);start.setFullYear(start.getFullYear()-1);
+    from=benchFmtISO(start);to=benchFmtISO(end);
+  }
+  const fEl=document.getElementById('bench-from'),tEl=document.getElementById('bench-to');
+  if(fEl)fEl.value=from;if(tEl)tEl.value=to;
+}
+function saveBenchDates(){
+  const f=document.getElementById('bench-from')?.value,t=document.getElementById('bench-to')?.value;
+  if(f&&t)try{localStorage.setItem(BENCH_PREFS_KEY,JSON.stringify({from:f,to:t}));}catch(e){}
+}
+function getBenchRange(){
+  const f=document.getElementById('bench-from')?.value,t=document.getElementById('bench-to')?.value;
+  if(!f||!t)return null;
+  if(f>=t)return null;
+  return{from:f,to:t};
+}
+window.setBenchPreset=function(p){
+  const end=new Date();end.setDate(end.getDate()-1);
+  let start=new Date(end);
+  if(p==='1m')start.setMonth(start.getMonth()-1);
+  else if(p==='3m')start.setMonth(start.getMonth()-3);
+  else if(p==='6m')start.setMonth(start.getMonth()-6);
+  else if(p==='1y')start.setFullYear(start.getFullYear()-1);
+  else if(p==='ytd')start=new Date(end.getFullYear(),0,1);
+  const fEl=document.getElementById('bench-from'),tEl=document.getElementById('bench-to');
+  if(fEl)fEl.value=benchFmtISO(start);
+  if(tEl)tEl.value=benchFmtISO(end);
+  saveBenchDates();
+  refreshBenchmark();
+};
+async function fetchJsonCorsBench(url){
+  const enc=encodeURIComponent(url);
+  for(const u of [`https://api.allorigins.win/get?url=${enc}`,`https://api.allorigins.win/raw?url=${enc}`,`https://corsproxy.io/?${enc}`,url]){
     try{
-      const r=await fetch(p,{signal:AbortSignal.timeout(7000)});if(!r.ok)continue;
-      const d=await r.json();const res=d?.chart?.result?.[0];if(!res)continue;
-      const closes=(res.indicators?.quote?.[0]?.close||[]).filter(v=>v!=null);
-      const start=closes[0]??res.meta?.chartPreviousClose;
-      const end=res.meta?.regularMarketPrice??closes[closes.length-1];
-      if(start&&end)return (end-start)/start*100;
-    }catch(e){continue;}
+      const r=await fetch(u,{signal:AbortSignal.timeout(22000)});
+      if(!r.ok)continue;
+      if(u===url){
+        const t=await r.text();
+        try{return JSON.parse(t);}catch(e){continue;}
+      }
+      let d=await r.json();
+      if(d&&typeof d.contents==='string'){try{d=JSON.parse(d.contents);}catch(e){continue;}}
+      if(d?.chart?.result||Array.isArray(d)||d?.s!=null)return d;
+    }catch(e){}
   }
   return null;
 }
-async function refreshBenchmark(){
-  const el=document.getElementById('benchmark-bars');
-  const icon=document.getElementById('benchRefreshIcon');
-  if(icon)icon.classList.add('fa-spin');
-  el.innerHTML='<div style="font-size:12px;color:#64748b">⏳ 벤치마크 조회 중...</div>';
-  /* 포트폴리오 수익률 */
-  const tv=totalValue(),cost=costBasis();
-  const portRet=cost>0?(tv-cost)/cost*100:0;
-  const benches=[{sym:'SPY',label:'S&P 500'},{sym:'QQQ',label:'나스닥 100'},{sym:'^KS11',label:'코스피'}];
-  const results=[];
-  for(const b of benches){
-    const ret=await fetchYtdReturn(b.sym);
-    results.push({label:b.label,ret,type:'bench'});
+function benchPickClose(ts,closes,targetTs,mode){
+  let idx=-1;
+  for(let i=0;i<ts.length;i++){
+    if(closes[i]==null)continue;
+    if(mode==='start'&&ts[i]>=targetTs){idx=i;break;}
+    if(mode==='end'&&ts[i]<=targetTs)idx=i;
   }
-  results.unshift({label:'내 포트폴리오',ret:portRet,type:'port'});
-  /* 렌더링 */
-  const maxAbs=Math.max(...results.map(r=>Math.abs(r.ret||0)),1);
+  return idx>=0?closes[idx]:null;
+}
+function benchRetFromChart(chart,fromISO,toISO){
+  if(!chart?.timestamps?.length)return null;
+  const ts=chart.timestamps,closes=chart.closes;
+  const start=benchPickClose(ts,closes,benchIsoToTs(fromISO),'start')??closes.find(v=>v!=null);
+  const end=benchPickClose(ts,closes,benchIsoToTs(toISO),'end')??closes.filter(v=>v!=null).pop();
+  if(start>0&&end!=null)return{start,end,ret:(end-start)/start*100};
+  return null;
+}
+async function fetchFinnhubChart(sym,fromISO,toISO){
+  if(!finnhubKey)return null;
+  const from=benchIsoToTs(fromISO)-86400*3,to=benchIsoToTs(toISO)+86400;
+  try{
+    const r=await fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${sym}&resolution=D&from=${from}&to=${to}&token=${finnhubKey}`,{signal:AbortSignal.timeout(12000)});
+    const d=await r.json();
+    if(d.s!=='ok'||!d.t?.length)return null;
+    return{timestamps:d.t,closes:d.c};
+  }catch(e){return null;}
+}
+async function fetchYahooChart(sym,fromISO,toISO){
+  const p1=benchIsoToTs(fromISO)-86400*5,p2=benchIsoToTs(toISO)+86400;
+  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&period1=${p1}&period2=${p2}&includePrePost=false`;
+  const d=await fetchJsonCorsBench(url);
+  const res=d?.chart?.result?.[0];if(!res)return null;
+  return{timestamps:res.timestamp||[],closes:res.indicators?.quote?.[0]?.close||[],meta:res.meta};
+}
+async function fetchTickerChart(ticker,fromISO,toISO){
+  const isKR=/^\d{6}$/.test((ticker||'').trim());
+  if(finnhubKey&&!isKR){
+    const c=await fetchFinnhubChart(ticker,fromISO,toISO);
+    if(c)return c;
+  }
+  const syms=isKR?[ticker+'.KS',ticker+'.KQ']:[ticker];
+  for(const sym of syms){
+    const c=await fetchYahooChart(sym,fromISO,toISO);
+    if(c&&c.timestamps.length)return c;
+  }
+  return null;
+}
+async function fetchNaverKospiChart(fromISO,toISO){
+  const f=fromISO.replace(/-/g,''),t=toISO.replace(/-/g,'');
+  const url=`https://api.finance.naver.com/siseJson.naver?symbol=KOSPI&requestType=1&startTime=${f}&endTime=${t}&timeframe=day`;
+  const enc=encodeURIComponent(url);
+  for(const u of [url,`https://api.allorigins.win/raw?url=${enc}`,`https://api.allorigins.win/get?url=${enc}`]){
+    try{
+      const r=await fetch(u,{signal:AbortSignal.timeout(22000)});
+      if(!r.ok)continue;
+      let text=await r.text();
+      if(u.includes('/get?')){const wrap=JSON.parse(text);text=wrap.contents||'';}
+      const rows=JSON.parse(text.replace(/'/g,'"'));
+      const data=rows.filter(x=>Array.isArray(x)&&/^\d{8}$/.test(x[0]));
+      if(data.length<2)continue;
+      return{
+        timestamps:data.map(x=>Math.floor(new Date(x[0].slice(0,4)+'-'+x[0].slice(4,6)+'-'+x[0].slice(6,8)+'T12:00:00').getTime()/1000)),
+        closes:data.map(x=>+x[4])
+      };
+    }catch(e){}
+  }
+  return null;
+}
+async function fetchBenchPeriodReturn(bench,fromISO,toISO){
+  if(bench.naver){
+    const c=await fetchNaverKospiChart(fromISO,toISO);
+    if(c){const r=benchRetFromChart(c,fromISO,toISO);if(r)return r.ret;}
+    if(bench.yahoo){const yc=await fetchYahooChart(bench.yahoo,fromISO,toISO);const r=benchRetFromChart(yc,fromISO,toISO);if(r)return r.ret;}
+    return null;
+  }
+  const fc=await fetchFinnhubChart(bench.sym,fromISO,toISO);
+  if(fc){const r=benchRetFromChart(fc,fromISO,toISO);if(r)return r.ret;}
+  const yc=await fetchYahooChart(bench.sym,fromISO,toISO);
+  const r=benchRetFromChart(yc,fromISO,toISO);
+  return r?r.ret:null;
+}
+async function calcPortPeriodReturn(fromISO,toISO){
+  if(!portfolio.length)return{ret:null,ok:0,total:0};
+  let startVal=0,endVal=0,ok=0;
+  for(const h of portfolio){
+    const chart=await fetchTickerChart(h.ticker,fromISO,toISO);
+    const px=benchRetFromChart(chart,fromISO,toISO);
+    if(!px){await new Promise(r=>setTimeout(r,60));continue;}
+    startVal+=px.start*h.qty;
+    endVal+=px.end*h.qty;
+    ok++;
+    await new Promise(r=>setTimeout(r,finnhubKey?120:200));
+  }
+  if(startVal<=0||!ok)return{ret:null,ok,total:portfolio.length};
+  return{ret:(endVal-startVal)/startVal*100,ok,total:portfolio.length};
+}
+function renderBenchmarkBars(results,fromISO,toISO,portNote){
+  const el=document.getElementById('benchmark-bars');
+  const maxAbs=Math.max(...results.map(r=>Math.abs(r.ret??0)),1);
   el.innerHTML=results.map(item=>{
     const ret=item.ret;
     const retStr=ret!=null?`${ret>=0?'+':''}${ret.toFixed(2)}%`:'데이터 없음';
@@ -4599,7 +4743,21 @@ async function refreshBenchmark(){
       </div>
       <div style="width:80px;text-align:right;font-family:'DM Mono',monospace;font-size:13px;font-weight:700;color:${color}">${retStr}</div>
     </div>`;
-  }).join('')+`<div style="font-size:10px;color:#334155;margin-top:8px">* 포트폴리오: 매수가 기준 총수익률 | S&P500·나스닥100·코스피: ${new Date().getFullYear()} YTD (Yahoo)</div>`;
+  }).join('')+`<div style="font-size:10px;color:#334155;margin-top:8px;line-height:1.6">* ${fromISO} ~ ${toISO} 누적 수익률 · 포트: 기간 시작 보유 수량 가중${portNote?` (${portNote})`:''} · 지수: SPY/QQQ(Finnhub→Yahoo) · 코스피(Naver→Yahoo)</div>`;
+}
+async function refreshBenchmark(){
+  const el=document.getElementById('benchmark-bars');
+  const icon=document.getElementById('benchRefreshIcon');
+  const range=getBenchRange();
+  if(!range){el.innerHTML='<div style="font-size:12px;color:#f87171">시작일이 종료일보다 앞서야 합니다.</div>';return;}
+  if(icon)icon.classList.add('fa-spin');
+  saveBenchDates();
+  el.innerHTML='<div style="font-size:12px;color:#64748b">⏳ 기간별 누적 수익률 조회 중...</div>';
+  const portRes=await calcPortPeriodReturn(range.from,range.to);
+  const benchRows=await Promise.all(BENCH_LIST.map(async b=>({label:b.label,ret:await fetchBenchPeriodReturn(b,range.from,range.to),type:'bench'})));
+  const results=[{label:'내 포트폴리오',ret:portRes.ret,type:'port'},...benchRows];
+  const portNote=portRes.total?`${portRes.ok}/${portRes.total}종목 반영`:'';
+  renderBenchmarkBars(results,range.from,range.to,portNote);
   if(icon)icon.classList.remove('fa-spin');
 }
 
@@ -5352,10 +5510,10 @@ async function runEarningsAI(){
     const dday=_emrE[ticker]?`실적 D-${Math.max(0,Math.round((new Date(_emrE[ticker].date)-new Date())/864e5))}(${_emrE[ticker].date})`:'';
     const _tbEA=(typeof TIME_BUCKET_MAP!=='undefined'?TIME_BUCKET_MAP:[]).flatMap(b=>b.holdings.map(bh=>({...bh,bYear:b.targetDate})));
     const _tbEAH=_tbEA.find(x=>x.ticker===ticker)||{};
-    const bucketCtxE=_tbEAH.bYear?`[단계목표] ${stageBucketLabel(_tbEAH.bYear)} | 테제: ${_tbEAH.thesis||'?'} | 마일스톤: ${_tbEAH.milestone||'?'} | 킬라인: ${_tbEAH.kill||'?'}`:'';
+    const bucketCtxE=_tbEAH.bYear?`[단계목표] ${stageBucketLabel(_tbEAH.bYear)} | 투자 이유: ${_tbEAH.thesis||'?'} | 마일스톤: ${_tbEAH.milestone||'?'} | 킬라인: ${_tbEAH.kill||'?'}`:'';
     try{
       const txt=await callLLM(
-        `당신은 연봉 100억 월가 PM입니다. ${ticker} Q2 2026 실적 발표를 ${todayStr} 기준 분석하세요.
+        `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${ticker} Q2 2026 실적 발표를 ${todayStr} 기준 분석하세요.
 ${stageCtx}
 ${bucketCtxE}
 킬신호 정의: ${killDef}
@@ -5395,8 +5553,8 @@ TARGET달성: ${_tbEAH.bYear||''} TARGET 마일스톤(${_tbEAH.milestone||'?'}) 
     try{
       const _tbEarnAll=(typeof TIME_BUCKET_MAP!=='undefined'?TIME_BUCKET_MAP:[]).flatMap(b=>b.holdings.map(bh=>({...bh,bYear:b.targetDate})));
       const txt=await callLLM(
-        `당신은 연봉 100억 PM입니다. v4.0 단계별 비중 포트폴리오의 Q2 2026 어닝 시즌을 전략적으로 분석하세요.
-[단계목표] 2단계 15%·3단계 45%·4단계 40% | G3s≤1=2단계 적립 | G3s·자금줄 8분화
+        `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. v4.0 단계별 비중 포트폴리오의 Q2 2026 어닝 시즌을 전략적으로 분석하세요.
+[단계목표] 2단계 15%·3단계 45%·4단계 40% | G3s≤1=2단계 사기 | G3s·자금줄 8분화
 [보유종목 단계·킬신호·버킷]
 ${ctx}
 [실적 예정 일정 + 관전 포인트]
@@ -5407,7 +5565,7 @@ ${EXPERT_LENS}
 가장위험한실적: G3s 강등·킬신호 가능성 가장 높은 종목 + 이유 (단계목표 비중 감안)
 가장기대되는실적: TARGET 마일스톤 달성 가능성 가장 높은 종목 + 구체 조건
 버킷연쇄: 2027버킷 내 선행 실적(ALAB/CRDO)이 후행 종목(NBIS/BE) 추정치·멀티플에 연쇄 효과
-하이퍼스케일러교차: GOOGL/META/MSFT/AMZN 실적(7/22~30)이 보유 종목 중 AI capex 관련 테제를 강화 vs 약화하는 분기점
+하이퍼스케일러교차: GOOGL/META/MSFT/AMZN 실적(7/22~30)이 보유 종목 중 AI capex 관련 투자 이유를 강화 vs 약화하는 분기점
 행동원칙: 어닝 시즌 중 "실적 전 포지션 축소 vs 홀드 vs 급여 추가" 판단 기준 — 이 포트 한정
 반박: 가장 취약한 가정 + 틀렸을 때 가장 다르게 봐야 할 버킷
 마크다운·별표 없이.`,900);
@@ -5417,42 +5575,34 @@ ${EXPERT_LENS}
 }
 
 
+/* ─── manual v4.1 실적 앵커 (API보다 우선 — CRDO 등 오류 방지) ─── */
+const EARN_WATCH_ANCHOR_APP={
+  AAOI:{date:'2026-08-07',fyQ:'2026 Q2',focus:'800G 양산 램프·GM 궤도'},
+  RMBS:{date:'2026-08-06',fyQ:'2026 Q2',focus:'로열티 성장·실적 모멘텀 확인'},
+  CLS: {date:'2026-08-01',fyQ:'2026 Q2',focus:'데이터센터(Data Center) 매출 비중·영업이익률'},
+  RKLB:{date:'2026-08-12',fyQ:'2026 Q2',focus:'분기 매출 $100M·Neutron 일정'},
+  CRDO:{date:'2026-08-20',fyQ:'2026 Q2',focus:'PAM4·1.6T 수주·신규고객'},
+  NBIX:{date:'2026-08-05',fyQ:'2026 Q2',focus:'Ingrezza 성장·EPS 궤도'},
+  ALAB:{date:'2026-08-04',fyQ:'2026 Q2',focus:'Customer B/C/D 절대매출'},
+  NBIS:{date:'2026-08-06',fyQ:'2026 Q2',focus:'ARR·추론 첫 공시·희석'},
+  BE:  {date:'2026-08-05',fyQ:'2026 Q2',focus:'총이익률 궤도·데이터센터(Data Center) 수주 이행·추가 고객'}
+};
+function earnWatchEntryForTickerApp(tk){
+  const n=_normTkApp(tk);
+  for(const k in EARN_WATCH_ANCHOR_APP){if(_normTkApp(k)===n)return EARN_WATCH_ANCHOR_APP[k];}
+  return null;
+}
+function applyEarnManualFallbackApp(tickers){
+  (tickers||[]).forEach(tk=>{
+    const anchor=earnWatchEntryForTickerApp(tk);
+    if(!anchor||!anchor.date)return;
+    applyApiEarnToMap(tk,{fyQ:anchor.fyQ,announce:anchor.date,display:fmtEarnDisplayApp(anchor.fyQ,anchor.date),source:'manual-v4.1',estimated:true,note:anchor.focus||''});
+  });
+}
+
 /* ─── 전역 실적·킬신호 맵 (전 탭 공용) ─── */
 const EARN_MAP_R={};
 const KILL_DEFS_R={};
-
-  const el=document.getElementById('earnings-preview-result');
-  el.style.display='block';
-  el.innerHTML=`<div class="insight-loader"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div><span style="margin-left:6px">포트폴리오 전체 실적 시즌 분석 중...</span></div>`;
-  const sm=getStagemeta();
-  const todayStr=new Date().toISOString().slice(0,10);
-  const holdings=portfolio.map(h=>{const mm=sm[h.ticker]||{};return `${h.ticker}(${mm.stage||0}단계, ${h.weight_pct||'?'}%, 킬:${mm.kill?'ON':'NO'})`;}).join(' | ');
-  const earnTable=Object.entries(EARN_MAP_R).map(([tk,e])=>{
-    const mm=sm[tk]||{};
-    return `${tk}: ${e.date} | ${e.note} | 킬정의: ${KILL_DEFS_R[tk]||'?'}`;
-  }).join('\n');
-  try{
-    const txt=await callLLM(`당신은 연봉 100억 월가 PM입니다. ${todayStr} 기준 아래 포트폴리오의 ${earnSeasonLabel()} 실적 시즌 전략을 한국어로 분석하세요. (과거 분기가 아니라 ${todayStr} 이후 도래할 실적 시즌 기준)
-${EXPERT_LENS}
-
-[보유현황]
-${holdings}
-
-[실적 일정 + 킬신호]
-${earnTable}
-
-6개 항목:
-1. 가장 위험한 실적 — 킬신호 발동 가능성 가장 높은 종목, 이유, 시장 반응 예측 (2~3차 파급 포함)
-2. 가장 기대되는 실적 — 서프라이즈 가능성 + 단계 승급 트리거가 될 수 있는 조건
-3. 하이퍼스케일러 교차 — GOOGL(~7/22)/META(~7/23)/MSFT(~7/29)/AMZN(7/30) 가이던스가 포트 종목에 미치는 영향 (종목별로)
-4. 어닝 시즌 포지션 전략 — 발표 전/후 행동 원칙 (종목별 단계 고려)
-5. 금리 환경 교차 — 실적 미스 시 고멀티플 종목의 밸류에이션 압박 순서
-6. Howard Marks 2nd level — 컨센서스가 놓치고 있는 것, 시장이 이미 가격에 반영한 것
-
-마크다운·별표 없이.`,1000);
-    el.innerHTML=`<div style="font-size:10px;color:#c9a84c;font-weight:700;letter-spacing:.1em;margin-bottom:8px">📊 ${earnSeasonLabel()} 실적 시즌 포트폴리오 전략 — ${todayStr}</div>`+fmtPMBullets(txt);
-  }catch(e){el.innerHTML=`<span style="color:#f87171">⚠ ${e.message}</span>`;}
-}
 
 /* ─── 이벤트 카운트다운 위젯 ─── */
 /* ─── PORTFOLIO_EVENTS: 장기투자자(Q3~Q2) 렌즈 — 6개월+ 흐름에 영향 주는 이벤트만 ───
@@ -5483,9 +5633,9 @@ function buildStageBucketMap(){
   const dd=(typeof DEEPDIVE!=='undefined')?DEEPDIVE:{};
   const kd=(typeof KILL_DEFS_R!=='undefined')?KILL_DEFS_R:{};
   const STAGE_CFG={
-    2:{weight:STAGE_TARGET_PCT[2],label:'2단계(적립)',period:'급여 1순위 · 적립',macroLink:'테제 확인·모멘텀 미성숙 · capex 독립줄 허용',rerating:'2단계 15% · 급여→⑥·미달 우선'},
-    3:{weight:STAGE_TARGET_PCT[3],label:'3단계(유지)',period:'유지 — 추가매수 금지',macroLink:'G3s≥3 시 4단계 · capex 직격+후행',rerating:'3단계 45% 고정'},
-    4:{weight:STAGE_TARGET_PCT[4],label:'4단계(수확 검토)',period:'수확 — 들고가기/일부매도',macroLink:'4-A ride · 4-B 촉매 시 트림→2단계',rerating:'4단계 40% 고정'},
+    2:{weight:STAGE_TARGET_PCT[2],label:'2단계(사기)',period:'급여 1순위 · 사기',macroLink:'투자 이유 확인·모멘텀 미성숙 · capex 독립줄 허용',rerating:'2단계 15% · 급여→⑥·미달 우선'},
+    3:{weight:STAGE_TARGET_PCT[3],label:'3단계(들기)',period:'들기 — 추가매수 금지',macroLink:'G3s≥3 시 4단계 · capex 직격+후행',rerating:'3단계 45% 고정'},
+    4:{weight:STAGE_TARGET_PCT[4],label:'4단계(팔기)',period:'팔기 — 들고가기/일부매도',macroLink:'4-A ride · 4-B 촉매 시 트림→2단계',rerating:'4단계 40% 고정'},
   };
   const CLR={2:{c:'#10b981',bg:'rgba(16,185,129,.08)',bd:'rgba(16,185,129,.25)'},3:{c:'#c9a84c',bg:'rgba(201,168,76,.08)',bd:'rgba(201,168,76,.25)'},4:{c:'#f87171',bg:'rgba(248,113,113,.06)',bd:'rgba(248,113,113,.2)'}};
   const buckets={2:[],3:[],4:[]};
@@ -5597,7 +5747,7 @@ function renderEventCountdown(){
 /* ─── 종목별 다음 실적 D-day 조회 — EARN_MAP_R + API 자동조회(한국 Naver IR·미국 Finnhub) ─── */
 window._appEarnApi={};
 function todayISOApp(){return new Date().toISOString().slice(0,10);}
-function isKrTickerApp(tk){return !!(codeForNameApp(tk)||/^\d{6}$/.test(String(tk||'').trim()));}
+function isKrTickerApp(tk){const n=String(tk||'').trim();return !!(codeForNameApp(n)||/^\d{6}$/.test(n)||/[가-힣]{2,}/.test(n));}
 function krItemCodeApp(tk){const n=String(tk||'').trim();if(/^\d{6}$/.test(n))return n;return codeForNameApp(n);}
 async function fetchJsonCorsApp(url){
   const enc=encodeURIComponent(url);
@@ -5648,7 +5798,7 @@ function fmtEarnDisplayApp(fyQ,announce){
   return announce?`${fyShort} (${announce})`:fyShort;
 }
 async function fetchKrNextEarningsApp(tk){
-  const code=krItemCodeApp(tk);if(!code)return null;
+  const code=krItemCodeApp(tk)||await resolveKrStockCodeApp(tk);if(!code)return null;
   try{
     const list=await fetchJsonCorsApp(`https://stock.naver.com/api/domestic/detail/ir?itemCode=${code}&startIdx=0&pageSize=40`);
     if(!Array.isArray(list)||!list.length)return null;
@@ -5743,6 +5893,7 @@ async function fetchAllPortfolioEarnings(force){
       if(e)applyApiEarnToMap(tk,e);
       await new Promise(r=>setTimeout(r,100));
     }
+    applyEarnManualFallbackApp(allTickers);
     try{localStorage.setItem('j1_app_earn',JSON.stringify({ts:Date.now(),map:window._appEarnApi}));}catch(e){}
     if(document.getElementById('tab-content-4')?.style.display!=='none'&&typeof refreshEarnTabUI==='function')refreshEarnTabUI();
     return window._appEarnApi;
@@ -5754,10 +5905,11 @@ function loadCachedAppEarn(){
     if(!c||!c.map||Date.now()-c.ts>86400000)return;
     window._appEarnApi=c.map;
     for(const tk in c.map)applyApiEarnToMap(tk,c.map[tk]);
+    applyEarnManualFallbackApp((portfolio||[]).map(h=>h.ticker));
   }catch(e){}
 }
 /* 한국 종목 코드↔이름 (LENS와 동일 — 포트 티커와 EARN_MAP 키 불일치 해소) */
-const KR_MAP_APP={'삼성전자':'005930','SK하이닉스':'000660','하이닉스':'000660','HYNIX':'000660','현대차':'005380','기아':'000270','LG에너지솔루션':'373220','삼성SDI':'006400','네이버':'035420','NAVER':'035420','카카오':'035720','셀트리온':'068270','삼성바이오로직스':'207940','POSCO홀딩스':'005490','포스코홀딩스':'005490','LG화학':'051910','현대모비스':'012330','KB금융':'105560','신한지주':'055550','한화에어로스페이스':'012450','한화시스템':'272210','두산에너빌리티':'034020','HD현대중공업':'329180','SK이노베이션':'096770','삼성전기':'009150','LG전자':'066570','SK텔레콤':'017670','KT':'030200'};
+const KR_MAP_APP={'삼성전자':'005930','SK하이닉스':'000660','하이닉스':'000660','HYNIX':'000660','현대차':'005380','기아':'000270','LG에너지솔루션':'373220','삼성SDI':'006400','네이버':'035420','NAVER':'035420','카카오':'035720','셀트리온':'068270','삼성바이오로직스':'207940','POSCO홀딩스':'005490','포스코홀딩스':'005490','LG화학':'051910','현대모비스':'012330','KB금융':'105560','신한지주':'055550','한화에어로스페이스':'012450','한화시스템':'272210','두산에너빌리티':'034020','HD현대중공업':'329180','SK이노베이션':'096770','삼성전기':'009150','LG전자':'066570','SK텔레콤':'017670','KT':'030200','대주전자재료':'078600','대주':'078600'};
 const KR_ALIAS_APP={'하이닉스':'SK하이닉스','에스케이하이닉스':'SK하이닉스','SKHYNIX':'SK하이닉스','하닉':'SK하이닉스'};
 function _normTkApp(s){return (s||'').toString().toUpperCase().replace(/[^0-9A-Z가-힣]/g,'');}
 function codeForNameApp(name){
@@ -5765,6 +5917,26 @@ function codeForNameApp(name){
   if(KR_MAP_APP[n])return KR_MAP_APP[n];
   const ali=KR_ALIAS_APP[n];
   if(ali&&KR_MAP_APP[_normTkApp(ali)])return KR_MAP_APP[_normTkApp(ali)];
+  return null;
+}
+async function resolveKrStockCodeApp(tk){
+  const n=String(tk||'').trim();
+  if(/^\d{6}$/.test(n))return n;
+  const mapped=codeForNameApp(n);
+  if(mapped)return mapped;
+  const norm=_normTkApp(n);
+  const cache=window._krCodeCacheApp||{};
+  if(cache[norm])return cache[norm];
+  try{
+    const d=await fetchJsonCorsApp(`https://ac.finance.naver.com/ac?q=${encodeURIComponent(n)}&target=stock`);
+    let code=null;
+    if(d?.items?.[0]?.[1])code=String(d.items[0][1]);
+    else if(Array.isArray(d?.[0])&&d[0][1])code=String(d[0][1]);
+    if(code&&/^\d{6}$/.test(code)){
+      window._krCodeCacheApp=Object.assign({},cache,{[norm]:code});
+      return code;
+    }
+  }catch(e){}
   return null;
 }
 function mirrorEarnAliases(earn){
@@ -5949,7 +6121,7 @@ function classifyNewsType(headline, category){
     const dd=er?Math.max(0,Math.round((new Date(earnDateToISO(er.date)||'2099-01-01')-new Date())/864e5)):null;
     return `${h.ticker}(${mm.stage||0}단계, 비중${h.weight_pct||'?'}%)${kd?` 킬신호:"${kd}"`:''}`+(er?` 실적D-${dd}(${er.date})`:``);
   }).join('\n');
-  const prompt=`당신은 연봉 100억 수준의 포트폴리오 매니저입니다. 아래 최근 7일 포트폴리오 보유종목 뉴스를 분석하세요.
+  const prompt=`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. 아래 최근 7일 포트폴리오 보유종목 뉴스를 분석하세요.
 
 [포트폴리오 현황]
 ${portCtx}
@@ -6691,7 +6863,7 @@ async function analyzeRotationAI(){
     :'';
   try{
     const txt=await callLLM(
-      `당신은 연봉 100억 수준의 월가 PM입니다. ${todayStr} 기준 "${theme.label}" 밸류체인의 자금 로테이션을 한국어로 분석해주세요.
+      `당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. ${todayStr} 기준 "${theme.label}" 밸류체인의 자금 로테이션을 한국어로 분석해주세요.
 
 현재 핫 구간: ${hot||'없음'}
 다음 주목 구간: ${next||'없음'}
@@ -6737,7 +6909,7 @@ const VC_HISTORY={
     sub:'에너지 전환 체인 기준',
     intro:'전력화·전동화 사이클도 병목을 따라 자금이 이동했다. 발전→송배전→저장→수요단으로 병목이 하류 이동 중. <b style="color:#c9a84c">전력 부족의 진짜 수혜는 발전기가 아니라 못 보낸 전기를 풀어주는 곳.</b>',
     stages:[
-      {era:'2022~23',label:'태양광·배터리 셀',desc:'IRA 보조금 + 셀 수요 폭증. 해소: 중국 과잉증설로 셀 가격 폭락',note:'수혜→역풍: 셀 마진 붕괴',state:'past'},
+      {era:'2022~23',label:'태양광·배터리 셀',desc:'IRA 보조금 + 셀 수요 폭증. 해소: 중국 과잉증설로 셀 가격 폭락',note:'수혜→조정: 셀 마진 압박',state:'past'},
       {era:'2024',label:'유틸리티·원전 재평가',desc:'AI 데이터센터 전력 수요 → 기저부하 원전·가스 재조명',note:'수혜: 유틸리티·SMR 내러티브',state:'past'},
       {era:'2025~26',label:'그리드 + 송배전 장비',desc:'발전은 되는데 송전망·변압기 병목. 변압기 리드타임 2~3년. 전기를 보낼 선과 변전이 없다',state:'now'},
       {era:'2027E',label:'장기 저장(LDES)',desc:'재생E 비중↑ → 간헐성 해소 위해 4시간+ 장주기 저장 수요. 그리드 안정화 병목',state:'next'},
@@ -6773,7 +6945,7 @@ const VC_HISTORY={
     sub:'금융 · 핀테크 체인 기준',
     intro:'디지털 자산·결제 인프라의 자금은 거래소→스테이블코인 결제→토큰화·RWA로 이동 중. <b style="color:#c9a84c">버블의 곡괭이는 투기 자산이 아니라 그 위를 흐르는 결제·수탁 레일.</b>',
     stages:[
-      {era:'2021~22',label:'거래소·트레이딩',desc:'리테일 투기 사이클 → 거래량 수수료 폭증. 해소: 약세장 거래량 붕괴',note:'수혜→역풍: 거래량 의존',state:'past'},
+      {era:'2021~22',label:'거래소·트레이딩',desc:'리테일 투기 사이클 → 거래량 수수료 폭증. 해소: 조정 국면 거래량 감소',note:'수혜→조정: 거래량 의존',state:'past'},
       {era:'2023~24',label:'커스터디 + ETF 레일',desc:'현물 ETF 승인 → 기관 진입. 수탁·발행 인프라 병목',note:'수혜: 커스터디·자산운용',state:'past'},
       {era:'2025~26',label:'스테이블코인 결제망',desc:'규제 명확화 → 스테이블코인이 실결제·송금 레일로. 결제·온램프 처리량 병목',state:'now'},
       {era:'2027E',label:'RWA 토큰화',desc:'국채·MMF·사모자산 온체인 토큰화 → 발행·정산·컴플라이언스 인프라 수요',state:'next'},
@@ -6989,8 +7161,9 @@ function _cleanLang(x){
 function init(){
   if(typeof mirrorEarnAliases==='function'&&typeof EARN_MAP_R!=='undefined')Object.assign(EARN_MAP_R,mirrorEarnAliases(EARN_MAP_R));
   if(typeof loadCachedAppEarn==='function')loadCachedAppEarn();
+  if(typeof applyEarnManualFallbackApp==='function')applyEarnManualFallbackApp((portfolio||[]).map(h=>h.ticker));
   if(typeof fetchAllPortfolioEarnings==='function')fetchAllPortfolioEarnings().catch(()=>{});
-  normalizeTargets();renderAll();switchTab(0);updateKeyUI();updateFinnhubUI();initGuide();
+  normalizeTargets();renderAll();switchTab(0);updateKeyUI();updateFinnhubUI();initGuide();initBenchDates();
   if(finnhubKey){refreshAllPrices();refreshWatchlistPrices();} /* 키 없으면 CORS 프록시 순차호출로 느려짐 — 버튼 클릭 시에만 시도 */
   setInterval(()=>{document.getElementById('lastUpdated').textContent=new Date().toLocaleTimeString('ko-KR')+' 기준';},60000);
 }
@@ -7041,14 +7214,14 @@ window.onload=init;
 const SX_CHAIN=["GPU","메모리","패키징","광학/연결","전력","냉각","클라우드","에너지"];
 const SX_SUB={GPU:'NVDA·AMD',메모리:'MU·SK',패키징:'CoWoS',"광학/연결":'PAM4·리타이머',전력:'VICR·MPWR',냉각:'VRT·MOD',클라우드:'GPU 클라우드',에너지:'터빈·연료전지',양자:'양자컴퓨팅'};
 const SC=['#64748b','#4a9eff','#10b981','#d9a943','#f5733f'];
-const SN=['관찰','미검증','적립','유지','수확 검토'];
+const SN=['관찰','미검증','사기','들기','팔기'];
 /* manual.md 객관적 단계 승급 트리거 (AND 조건·관측가능·재량 최소화) */
 const STAGE_TRIGGERS=[
   {next:'0→1',cond:'첫 수주 공시 OR 첫 셀사이드 커버리지 OR 바닥 패턴(하락 후 200일선 평탄화)',src:'8-K·PR·차트'},
   {next:'1→2',cond:'book-to-bill>1 AND 컨센 EPS 첫 상향 AND 베이스 상단 돌파',src:'실적·컨센서스·차트'},
   {next:'2→3',cond:'2분기 연속 추정치 상향 AND 가이던스 상향',src:'어닝콜·가이던스'},
-  {next:'3→4',cond:'실적 비트&상향 AND 추정치 패러볼릭(=이미 컨센서스화 → 수확 신호)',src:'추정치 리비전'},
-  {next:'4=수확',cond:'4-A(추정치 매분기 상향 시 무트림 ride·레버리지 없음) / 4-B(촉매 1개 → 15% 트림 후 1·2단계 회전)',src:'추정치 방향'},
+  {next:'3→4',cond:'실적 비트&상향 AND 추정치 패러볼릭(=이미 컨센서스화 → 팔기 신호)',src:'추정치 리비전'},
+  {next:'4=팔기',cond:'4-A(추정치 매분기 상향 시 무트림 ride·레버리지 없음) / 4-B(촉매 1개 → 15% 트림 후 1·2단계 회전)',src:'추정치 방향'},
 ];
 let meta=JSON.parse(localStorage.getItem('j1_stagemeta')||'{}');
 let agent=JSON.parse(localStorage.getItem('j1_agent')||'null');
@@ -7075,17 +7248,17 @@ function _sxGetRat(tk,mm){
   let bucketDetail=_sxParseBullets(mm.bucketDetail);
   if(!stageDetail.length&&stageWhy)stageDetail=[_sxEsc(stageWhy)];
   if(!stageDetail.length){
-    if(dd.thesis)stageDetail.push(`투자 테제: ${_sxEsc(dd.thesis)}`);
+    if(dd.thesis)stageDetail.push(`투자 이유: ${_sxEsc(dd.thesis)}`);
     if(mm.chain)stageDetail.push(`밸류체인 ${mm.chain} — 병목·가격결정력이 단계 판정 축`);
     if(mm.money)stageDetail.push(`자금줄 ${mm.money} — capex·예산 흐름과 연동`);
-    if(mm.val)stageDetail.push(`밸류 오버레이 ${mm.val} — 단계(테제 검증)와 가격 반영은 별개`);
+    if(mm.val)stageDetail.push(`밸류 오버레이 ${mm.val} — 단계(투자 이유 검증)와 가격 반영은 별개`);
     const trig=STAGE_TRIGGERS[Math.min(st,3)];
     if(trig)stageDetail.push(`다음 승급(${trig.next}): ${trig.cond} [${trig.src}]`);
   }
   const stBk=parseStageBucketVal(bucket)||parseStageBucketVal(tb.year);
-  if(!bucketWhy&&stBk)bucketWhy=`${stBk}단계 목표(${STAGE_TARGET_PCT[stBk]||'?'}%) — re-rating 수확 검토 시점 (매수 시점 아님)`;
+  if(!bucketWhy&&stBk)bucketWhy=`${stBk}단계 목표(${STAGE_TARGET_PCT[stBk]||'?'}%) — re-rating 팔기 검토 시점 (매수 시점 아님)`;
   if(!bucketDetail.length){
-    if(tb.thesis)bucketDetail.push(`단계 테제: ${_sxEsc(tb.thesis)}`);
+    if(tb.thesis)bucketDetail.push(`단계별 투자 이유: ${_sxEsc(tb.thesis)}`);
     if(tb.milestone)bucketDetail.push(`마일스톤: ${_sxEsc(tb.milestone)}`);
     if(mm.money)bucketDetail.push(`자금줄 ${mm.money} — capex 직격/독립 구분`);
     if(stBk)bucketDetail.push(`15/45/40: ${stBk}단계 목표 ${STAGE_TARGET_PCT[stBk]||'?'}% · 급여 2단계(1순위)→3단계(2순위)`);
@@ -7261,12 +7434,12 @@ function sxRender(){
     /* 사전 약속 매도 규율 (Odysseus 계약) — 차가울 때 정한 행동을 뜨거울 때 그대로 */
     html+=`<div class="sx-conc" style="margin-bottom:14px;border-color:rgba(248,113,113,.18)">
       <div style="font-size:11px;letter-spacing:.1em;color:#475569;text-transform:uppercase;margin-bottom:4px">⛓ 사전 약속 매도 규율 (Odysseus 계약)</div>
-      <div style="font-size:10px;color:#475569;margin-bottom:10px;line-height:1.5">오디세우스는 세이렌 노래를 듣기 전에 자신을 돛대에 묶었다. 폭락(공포)·급등(환희) 순간엔 판단이 망가진다 — <b style="color:#f87171">행동을 지금 차가울 때 못 박는다.</b> 그 가격·신호가 오면 토론 없이 집행. 카너먼: 시스템2를 미리 적어두면 시스템1을 이긴다.</div>
+      <div style="font-size:10px;color:#475569;margin-bottom:10px;line-height:1.5">오디세우스는 세이렌 노래를 듣기 전에 자신을 돛대에 묶었다. 급락(변동성)·급등(환희) 순간엔 판단이 흔들린다 — <b style="color:#10b981">행동을 지금 차가울 때 미리 정해둔다.</b> 그 가격·신호가 오면 토론 없이 집행. 카너먼: 시스템2를 미리 적어두면 시스템1을 이긴다.</div>
       <div style="display:flex;flex-direction:column;gap:7px;font-size:11px;line-height:1.5">
         <div style="padding:8px 10px;background:rgba(248,113,113,.04);border-radius:7px"><b style="color:#f87171">킬신호 발동 시</b> → 토론 없이 비중 절반 축소, 48시간 내. "다음 분기엔 나아지겠지"는 사전부검 사인②. 반등 기다리지 않는다.</div>
         <div style="padding:8px 10px;background:rgba(251,191,36,.04);border-radius:7px"><b style="color:#fbbf24">단일 종목 18% 초과 시</b> → 초과분 기계적 트림(상승으로 넘었어도). 한 종목이 포트를 끌고 가지 못하게 — 규율이 욕심을 이긴다.</div>
         <div style="padding:8px 10px;background:rgba(251,191,36,.04);border-radius:7px"><b style="color:#fbbf24">4단계 + 추정치 상향 멈춤</b> → 4-B 15% 트림 후 1·2단계 회전. "조금만 더"의 유혹 = 원칙5(환희 확정 회피) 위반.</div>
-        <div style="padding:8px 10px;background:rgba(16,185,129,.04);border-radius:7px"><b style="color:#10b981">시장 -20% 패닉 시(보유 테제 무손상)</b> → 매도 금지. 급여분으로 가장 신선한 1~2단계 추가. 공포는 매수 신호(테제 살아있을 때만).</div>
+        <div style="padding:8px 10px;background:rgba(16,185,129,.04);border-radius:7px"><b style="color:#10b981">시장 -20% 조정 시(보유 종목 투자 이유 무손상)</b> → 매도 금지. 급여분으로 가장 신선한 1~2단계 추가. 좋은 가격 구간은 기회(투자 이유 살아있을 때만).</div>
         <div style="padding:8px 10px;background:rgba(167,139,250,.04);border-radius:7px"><b style="color:#a78bfa">+100% 환희·SNS 과열 시</b> → 신규 추격매수 금지. 거장 렌즈(하우절) 먼저. 모두가 사는 건 이미 가격에 있다(막스).</div>
       </div>
       <div style="font-size:10px;color:#334155;margin-top:9px;line-height:1.5">⚠ 이건 예측이 아니라 <b>선약속</b> — 신호가 오면 "지금 생각"이 아니라 "그때 적어둔 것"을 따른다. 매매는 직접 집행(이 앱은 알림만). 분기마다 차가운 머리로 갱신.</div>
@@ -7393,7 +7566,7 @@ function sxCard(h,mm){
   /* 단계 진행도 바 */
   const curStage=+mm.stage||0;
   const stageBar=(()=>{
-    const labels=['0단계(관찰)','1단계(미검증)','2단계(적립)','3단계(유지)','4단계(수확 검토)'];
+    const labels=['0단계(관찰)','1단계(미검증)','2단계(사기)','3단계(들기)','4단계(팔기)'];
     const colors=['#475569','#4a9eff','#10b981','#c9a84c','#f87171'];
     const dots=labels.map((l,i)=>{
       const active=i<=curStage,current=i===curStage;
@@ -7507,11 +7680,11 @@ window.sxGenRationale=async function(tk){
   const ret=((h.price-h.avg)/h.avg*100).toFixed(1);
   const ctx=`티커: ${tk} | 섹터: ${h.sector||'?'} | 단계: ${st}(${SN[st]}) | 단계목표: ${mm.bucket||stageBucketLabel(tb.year)||'미정'} | 자금줄: ${mm.money||'?'} | 밸류체인: ${mm.chain||'?'} | 밸류: ${mm.val||'미설정'} | 비중: ${W(h).toFixed(1)}% | 수익률: ${ret}%
 기존 단계근거: ${mm.stageWhy||'없음'}
-테제: ${dd.thesis||tb.thesis||'없음'} | 마일스톤: ${tb.milestone||'없음'} | 킬: ${dd.ifkill||tb.kill||'없음'}`;
-  const stageDef=`0단계(관찰) / 1단계(미검증) / 2단계(적립) / 3단계(유지) / 4단계(수확 검토·들고가기/일부매도)`;
-  const bucketDef=`단계목표=15/45/40 비중 버킷. 2단계 15%(적립·급여 1순위) / 3단계 45%(유지·추매 금지) / 4단계 40%(수확). re-rating 수확 검토 시점`;
+투자 이유: ${dd.thesis||tb.thesis||'없음'} | 마일스톤: ${tb.milestone||'없음'} | 킬: ${dd.ifkill||tb.kill||'없음'}`;
+  const stageDef=`0단계(관찰) / 1단계(미검증) / 2단계(사기) / 3단계(들기) / 4단계(팔기·들고가기/일부매도)`;
+  const bucketDef=`단계목표=15/45/40 비중 버킷. 2단계 15%(사기·급여 1순위) / 3단계 45%(들기·추매 금지) / 4단계 40%(팔기). re-rating 팔기 검토 시점`;
   try{
-    const data=JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:`당신은 연봉 100억 PM입니다. 고객에게 "${tk}"가 왜 ${stageLabel(st)}이고 왜 ${stageBucketLabel(mm.bucket||tb.year)} 목표인지 사실관계 기반으로 설명하세요.
+    const data=JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. 고객에게 "${tk}"가 왜 ${stageLabel(st)}이고 왜 ${stageBucketLabel(mm.bucket||tb.year)} 목표인지 사실관계 기반으로 설명하세요.
 
 [지금위치 정의] ${stageDef}
 [단계목표 원칙] ${bucketDef}
@@ -7521,12 +7694,12 @@ ${ctx}
 ★작성 규칙:
 - 산업 맥락(예: AI capex→HBM 수요, 메모리 3사 구조 등)을 종목 고유 사업모델로 연결
 - 단계 판정: 객관 지표(추정치 리비전·수주·book-to-bill·차트 등) + 0~4 정의 정합
-- TARGET: 병목·수요 타임라인·마일스톤이 왜 그 분기에 수확 검토 시점인지 (추정이면 "(추정)" 표기)
-- 주가 반영도(밸류)와 단계(테제 검증)를 분리 서술
+- TARGET: 병목·수요 타임라인·마일스톤이 왜 그 분기에 팔기 검토 시점인지 (추정이면 "(추정)" 표기)
+- 주가 반영도(밸류)와 단계(투자 이유 검증)를 분리 서술
 - 매수/매도 권유 금지. 한자·일본어 금지. 한국어 본문.
 
 유효 JSON만 출력:
-{"stageWhy":"한줄 요약","stageDetail":["산업·테제 1문장","객관지표 1문장","0~4단계 정합 1문장","주가 반영·밸류 1문장"],"bucketWhy":"TARGET 한줄 요약","bucketDetail":["수확 시점 논리 1문장","병목·수요 타임라인 1문장","마일스톤 연결 1문장","리스크·불확실성 1문장"]}`}],max_tokens:900,temperature:0.45});
+{"stageWhy":"한줄 요약","stageDetail":["산업·투자 이유 1문장","객관지표 1문장","0~4단계 정합 1문장","주가 반영·밸류 1문장"],"bucketWhy":"TARGET 한줄 요약","bucketDetail":["팔기 시점 논리 1문장","병목·수요 타임라인 1문장","마일스톤 연결 1문장","리스크·불확실성 1문장"]}`}],max_tokens:900,temperature:0.45});
     const raw=await _sxGroqCall(apiKey,data);
     const jm=raw.match(/\{[\s\S]*\}/);if(!jm)throw new Error('JSON 파싱 실패');
     const j=JSON.parse(jm[0]);
@@ -7657,7 +7830,7 @@ window.sxAIAnalysis=async function(){
 
   const _kdrSX=typeof KILL_DEFS_R!=='undefined'?KILL_DEFS_R:{};
   const _emrSX=typeof EARN_MAP_R!=='undefined'?EARN_MAP_R:{};
-  const STAGE_N=['관찰','미검증','적립','유지','수확 검토'];
+  const STAGE_N=['관찰','미검증','사기','들기','팔기'];
   const _tbSXA=(typeof TIME_BUCKET_MAP!=='undefined'?TIME_BUCKET_MAP:[]).flatMap(b=>b.holdings.map(bh=>({...bh,bYear:b.targetDate})));
   const ctx=pf.map(h=>{
     const mm=m(h.ticker);
@@ -7670,15 +7843,15 @@ window.sxAIAnalysis=async function(){
   }).join('\n');
 
   try{
-    const data=JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:`당신은 포트폴리오 리스크 PM입니다. v4.0 단계별 비중 포트의 킬신호를 점검하세요.
+    const data=JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. v4.0 단계별 비중 포트의 킬신호를 점검하세요.
 [프레임] 2단계 15%·3단계 45%·4단계 40% | G3s·자금줄 8분화 | capex 직격 60%
 [보유종목 — 단계·킬신호 정의·실적 D-day·버킷·마일스톤]
 ${ctx}
 
-${typeof EXPERT_LENS!=='undefined'?EXPERT_LENS:'연봉 100억 PM처럼 2-3차 파급까지 분석. 일반론 금지.'}
+${typeof EXPERT_LENS!=='undefined'?EXPERT_LENS:'TEAM JACK1 틀처럼 2-3차 파급까지 분석. 일반론 금지.'}
 
 형식: 종목마다 한 줄씩 (총 ${pf.length}줄), 마지막에 전체 총평 한 줄.
-TICKER: 위험도(🔴/🟡/🟢) | 버킷 테제 생존 여부 + 실적D-day 가까운 종목은 관전포인트 | 가장 먼저 볼 선행지표
+TICKER: 위험도(🔴/🟡/🟢) | 버킷 투자 이유 생존 여부 + 실적D-day 가까운 종목은 관전포인트 | 가장 먼저 볼 선행지표
 전체총평: 지금 포트에서 가장 긴급한 킬신호 후보 + 15/45/40 달성 위협 요소`}],max_tokens:900,temperature:0.4});
     const txt=await _sxGroqCall(apiKey,data);
     el.innerHTML=`<div style="font-size:10px;letter-spacing:.12em;color:#f5604d;font-weight:700;margin-bottom:10px">🔴 킬신호 전체 점검 — ${new Date().toLocaleTimeString('ko-KR')}</div>`
@@ -7697,7 +7870,7 @@ window.sxAIStageReview=async function(){
   el.style.display='block';
   el.innerHTML='<div style="display:flex;align-items:center;gap:8px;color:#64748b"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div> 단계 분석 중...</div>';
 
-  const STAGE_N=['관찰','미검증','적립','유지','수확 검토'];
+  const STAGE_N=['관찰','미검증','사기','들기','팔기'];
   const killDefs=typeof KILL_DEFS_R!=='undefined'?KILL_DEFS_R:{};
   const earnMap=typeof EARN_MAP_R!=='undefined'?EARN_MAP_R:{};
   const _tbSXR=(typeof TIME_BUCKET_MAP!=='undefined'?TIME_BUCKET_MAP:[]).flatMap(b=>b.holdings.map(bh=>({...bh,bYear:b.targetDate})));
@@ -7719,8 +7892,8 @@ window.sxAIStageReview=async function(){
   ].filter(Boolean).join(' | ');
 
   try{
-    const data=JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:`당신은 연봉 100억 PM입니다. v4.0 단계별 비중(15/45/40) 포트의 G3s·단계목표 포지셔닝을 종합 분석하세요.
-[프레임] 2단계 15%·3단계 45%·4단계 40%. G3s≤1=2단계 적립. G3s 결정트리 ①~⑦. 밸류체인 구간별 집중도(구간당 상한 ${vcConc.cap}%).
+    const data=JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:`당신은 TEAM JACK1 투자 프레임 전문가입니다(월가 PM 수준 사고). 사용자 출력에 PM 단어 금지. v4.0 단계별 비중(15/45/40) 포트의 G3s·단계목표 포지셔닝을 종합 분석하세요.
+[프레임] 2단계 15%·3단계 45%·4단계 40%. G3s≤1=2단계 사기. G3s 결정트리 ①~⑦. 밸류체인 구간별 집중도(구간당 상한 ${vcConc.cap}%).
 [포트폴리오]
 ${ctx}
 [밸류체인 집중도] ${vcCtx||'매핑 없음'}
@@ -7729,7 +7902,7 @@ ${ctx}
 1. 단계목표별 적합성 — 2/3/4단계 종목이 G3s·15/45/40와 정합한지. 가장 불확실한 종목
 2. 단계 배분 현황 — 15/45/40 대비 괴리, 2단계(15%)·3단계(45%) 미달 여부
 3. G3s 승급/강등 후보 — 실적D-day 연계 관측 조건
-4. 밸류에이션 vs 테제 불일치 — 가격이 마일스톤보다 앞선/뒤진 종목
+4. 밸류에이션 vs 투자 이유 불일치 — 가격이 마일스톤보다 앞선/뒤진 종목
 5. 밸류체인 로테이션 — 구간별 집중도·상한 초과 구간, hyperscaler capex 추세와 정합·분산 필요 여부
 6. 하워드 막스 2단계 사고 — 컨센서스와 다른 독립 판단
 마크다운·별표 없이.`}],max_tokens:850,temperature:0.5});
@@ -8278,12 +8451,12 @@ function geoRenderStaticBody(sim){
     <div style="font-size:11px;color:#64748b;line-height:1.6;margin-bottom:12px">내 포트엔 <b>방산(방산주)·국방예산</b> 경로가 주. 에너지(유럽 가스) 2차. 이란보다 직접도 낮으나 EW·재고보충 사이클의 구조적 배경.</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
       <div style="padding:10px 12px;background:rgba(74,158,255,.05);border-radius:9px"><div style="font-size:10px;font-weight:700;color:#4a9eff;margin-bottom:4px">🔺 고조/지속 (방산↑)</div><div style="font-size:10px;color:#94a3b8;line-height:1.6">전선 확대 / NATO 증액 / EW·드론 수요↑ / 재고보충 가속</div></div>
-      <div style="padding:10px 12px;background:rgba(251,191,36,.05);border-radius:9px"><div style="font-size:10px;font-weight:700;color:#fbbf24;margin-bottom:4px">🔻 휴전/종전 (방산 단기↓)</div><div style="font-size:10px;color:#94a3b8;line-height:1.6">정전협상 / 재건 테마 / 센티먼트 약세(EW 업그레이드는 전훈으로 지속)</div></div>
+      <div style="padding:10px 12px;background:rgba(251,191,36,.05);border-radius:9px"><div style="font-size:10px;font-weight:700;color:#fbbf24;margin-bottom:4px">🔻 휴전/종전 (방산 단기 조정)</div><div style="font-size:10px;color:#94a3b8;line-height:1.6">정전협상 / 재건 테마 / 센티먼트 단기 조정(EW 업그레이드는 전훈으로 지속)</div></div>
     </div>
     <div style="font-size:11px;color:#e2e8f0;line-height:1.7;margin-bottom:10px"><b style="color:#4a9eff">→ 송신경로:</b> 분쟁 지속·NATO 증액→<b>방산주 backlog·EW 사이클 구조 지지</b>. 종전 시 센티먼트 단기↓이나 방산주는 전훈 반영 EW라 플랫폼 방산보다 둔감. 유럽 가스 안정 시 에너지 인플레 완화(이란과 상쇄).</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <span ${sim('우크라이나 전선 확대 + NATO 국방비 추가 증액 — 방산주 backlog·EW 업그레이드 사이클 구조 강화, 방산 자금줄(정부지갑)이 AI capex와 독립 작동하는 분산 가치')} class="btn-ghost" style="font-size:11px;padding:6px 12px;border-color:rgba(74,158,255,.3);color:#4a9eff">🔺 전선확대·NATO 증액</span>
-      <span ${sim('우크라이나-러시아 정전 합의 — 방산 센티먼트 단기 약세 vs 방산주 EW 업그레이드 둔감성, 재건 테마, 유럽 가스 안정으로 에너지 인플레가 이란발과 상쇄되는 경로')} class="btn-ghost" style="font-size:11px;padding:6px 12px;border-color:rgba(251,191,36,.3);color:#fbbf24">🔻 정전 합의</span>
+      <span ${sim('우크라이나-러시아 정전 합의 — 방산 센티먼트 단기 조정 vs 방산주 EW 업그레이드 둔감성, 재건 테마, 유럽 가스 안정으로 에너지 인플레가 이란발과 상쇄되는 경로')} class="btn-ghost" style="font-size:11px;padding:6px 12px;border-color:rgba(251,191,36,.3);color:#fbbf24">🔻 정전 합의</span>
     </div>
   </div>
   <div class="glass" style="border-radius:18px;padding:20px 22px;margin-bottom:16px">
@@ -8438,16 +8611,16 @@ window.addEventListener('load',function(){setTimeout(function(){
 /* ═══════════ TAB 11: 종목 보고서 — 단계별 심층 리포트 ═══════════ */
 (function(){
   const REP_STAGES=[
-    {n:1,label:'1단계(미검증)',sub:'테제 미확인',clr:'#4a9eff'},
-    {n:2,label:'2단계(적립)',sub:'급여 1순위',clr:'#10b981'},
-    {n:3,label:'3단계(유지)',sub:'추가매수 금지',clr:'#c9a84c'},
-    {n:4,label:'4단계(수확 검토)',sub:'일부 정리',clr:'#f87171'}
+    {n:1,label:'1단계(미검증)',sub:'투자 이유 미확인',clr:'#4a9eff'},
+    {n:2,label:'2단계(사기)',sub:'급여 1순위',clr:'#10b981'},
+    {n:3,label:'3단계(들기)',sub:'추가매수 금지',clr:'#c9a84c'},
+    {n:4,label:'4단계(팔기)',sub:'일부 정리',clr:'#f87171'}
   ];
   /* reports/deep-dive 기준 게시 카탈로그 — SNS 카드뉴스와 별도 심층 리포트 */
   const STOCK_REPORT_CATALOG=[
     {ticker:'IONQ',stage:2,theme:'양자컴퓨팅',funding:'정부·양자',cash:'소각',updated:'2026-06',earnDate:'8/12',earnFocus:'RPO 순증감·반복구매 첫 사례',thesis:'양자+SkyWater 수직통합, RPO 성장이 파일럿→반복구매 전환 선행 증거'},
     {ticker:'RKLB',stage:2,theme:'우주·중형발사',funding:'우주발사',cash:'소각',updated:'2026-06',earnDate:'8/12',earnFocus:'Neutron 타임라인·SS 매출비중',thesis:'우주 수직통합, Neutron 데뷔가 바이너리 변수'},
-    {ticker:'NBIS',stage:3,theme:'GPU·AI 클라우드',funding:'GPU클라우드',cash:'소각',updated:'2026-06',earnDate:'8/6',earnFocus:'추론 매출 첫 공시·주당 ARR',thesis:'GPU 클라우드, 추론 매출·ARR 가속이 테제 핵심'},
+    {ticker:'NBIS',stage:3,theme:'GPU·AI 클라우드',funding:'GPU클라우드',cash:'소각',updated:'2026-06',earnDate:'8/6',earnFocus:'추론 매출 첫 공시·주당 ARR',thesis:'GPU 클라우드, 추론 매출·ARR 가속이 투자 이유 핵심'},
     {ticker:'BE',stage:3,theme:'온사이트 연료전지',funding:'DC전력',cash:'수취',updated:'2026-06',earnDate:'8/5',earnFocus:'GPM 추세·3번째 DC PO',thesis:'DC 전용 전력 병목 검증→과열, GPM 지속성이 관건'},
     {ticker:'CRDO',stage:3,theme:'광통신·연결 IC',funding:'연결IC',cash:'수취',updated:'2026-06',earnDate:'8/20',earnFocus:'신규 고객 수+1.6T 디자인윈',thesis:'랙 간 연결(AEC+PAM4), 800G→1.6T 전환 통행료'},
     {ticker:'MRCY',stage:3,theme:'방산·정부예산',funding:'방산',cash:'수취',updated:'2026-06',earnDate:'8/18',earnFocus:'book-to-bill·영업마진 14%+',thesis:'정부 예산 닻, backlog가 유일한 방어선'},
@@ -8464,7 +8637,7 @@ window.addEventListener('load',function(){setTimeout(function(){
     STOCK_REPORT_CATALOG.forEach(c=>{
       const dd=(typeof DEEPDIVE!=='undefined'?DEEPDIVE[c.ticker]:{})||{};
       const mm=sm[c.ticker]||{};
-      const er=(typeof EARN_MAP_R!=='undefined'?EARN_MAP_R[c.ticker]):{})||{};
+      const er=(typeof EARN_MAP_R!=='undefined'?EARN_MAP_R[c.ticker]:{})||{};
       const kill=(typeof KILL_DEFS_R!=='undefined'?KILL_DEFS_R[c.ticker]:'')||dd.ifkill||'';
       out.push(Object.assign({},c,{
         thesis:dd.thesis||c.thesis||'',
@@ -8486,7 +8659,7 @@ window.addEventListener('load',function(){setTimeout(function(){
       const mm=sm[h.ticker]||{};
       let st=(typeof parseStageBucketVal==='function'?parseStageBucketVal(mm.bucket):null);
       if(st==null){const s=+mm.stage||0;st=s>=1&&s<=4?s:2;}
-      const er=(typeof EARN_MAP_R!=='undefined'?EARN_MAP_R[h.ticker]):{})||{};
+      const er=(typeof EARN_MAP_R!=='undefined'?EARN_MAP_R[h.ticker]:{})||{};
       out.push({ticker:h.ticker,stage:st,theme:mm.chain||h.sector||'',funding:mm.money||'',updated:'',earnDate:er.date||'',earnFocus:'',thesis:dd.thesis||'',bear:dd.bear||'',watch:dd.watch||'',ifkill:dd.ifkill||(typeof KILL_DEFS_R!=='undefined'?KILL_DEFS_R[h.ticker]:'')||'',hist:dd.hist||'',stageWhy:mm.stageWhy||'',chain:mm.chain||'',earnNote:er.note||'',inPortfolio:true});
     });
     return out;
@@ -8544,9 +8717,9 @@ window.addEventListener('load',function(){setTimeout(function(){
         ${r.stageWhy?`<div style="font-size:12px;color:#64748b;margin-top:10px;line-height:1.6"><b style="color:#94a3b8">단계 근거:</b> ${repEsc(r.stageWhy)}</div>`:''}
       </div>
       ${repSection('강세 논리 · 왜 주목하는가',r.thesis,'#10b981','✅')}
-      ${repSection('약세 시나리오 · 가장 강한 반론',r.bear,'#f87171','⚠️')}
+      ${repSection('가설 검증 · 성장 논리를 시험할 반론',r.bear,'#4a9eff','🔍')}
       ${repSection('핵심 관전 지표',r.watch,'#4a9eff','🔍')}
-      ${repSection('킬 트리거 · 테제 붕괴 신호',r.ifkill,'#f87171','🔴')}
+      ${repSection('킬 트리거 · 투자 이유 무너짐 신호',r.ifkill,'#f87171','🔴')}
       ${r.earnFocus?repSection('다음 실적 1순위 체크','실적일 '+r.earnDate+' — '+r.earnFocus+(r.earnNote?' ('+r.earnNote+')':''),'#fbbf24','📅'):''}
       ${repSection('역사적 유비 · 비교 사례',r.hist,'#a78bfa','📚')}
       <div style="font-size:10px;color:#334155;line-height:1.6;margin-top:8px">전체 md: reports/deep-dive/${repEsc(r.ticker)}.md · 재무 해부: reports/deep-dive/_REPORT_${repEsc(r.ticker)}.md</div>
@@ -8592,7 +8765,7 @@ window.addEventListener('load',function(){setTimeout(function(){
       <div style="margin-bottom:22px">
         <div style="font-size:12px;font-weight:800;letter-spacing:.1em;color:#c9a84c;margin-bottom:6px">TEAM JACK1 · 리서치</div>
         <h2 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:8px">종목 보고서</h2>
-        <p style="color:#94a3b8;font-size:13px;line-height:1.7;max-width:760px">SNS 카드뉴스는 <b style="color:#64748b">홍보용 티저</b>, 이 메뉴는 <b style="color:#e2e8f0">단계별 심층 리포트</b>입니다. 테제·약세론·실적 체크포인트·킬 트리거까지 한곳에서 읽을 수 있습니다.</p>
+        <p style="color:#94a3b8;font-size:13px;line-height:1.7;max-width:760px">SNS 카드뉴스는 <b style="color:#64748b">홍보용 티저</b>, 이 메뉴는 <b style="color:#e2e8f0">단계별 심층 리포트</b>입니다. 성장 논리·검증 포인트·실적 체크포인트·킬 트리거까지 한곳에서 읽을 수 있습니다.</p>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">${tabs}</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px">${cards}</div>
@@ -8619,8 +8792,8 @@ window.addEventListener('load',function(){setTimeout(function(){
     const mm=sm[tk]||{};
     const prompt=`${typeof EXPERT_LENS!=='undefined'?EXPERT_LENS:''}
 [종목] ${tk} · ${r.stage||mm.stage||'?'}단계 · ${r.funding||mm.money||''}
-[테제] ${r.thesis||''}
-[약세] ${r.bear||''}
+[투자 이유] ${r.thesis||''}
+[검증] ${r.bear||''}
 [관전] ${r.watch||''}
 [킬] ${r.ifkill||''}
 
@@ -8628,7 +8801,7 @@ window.addEventListener('load',function(){setTimeout(function(){
 각 항목 "라벨: 내용" 한 줄씩, 불릿 2~3개:
 한줄요약: 이 회사가 뭘 하는지 초등학생도 이해하게
 왜지금: 단계·촉매·시장 타이밍
-리스크: 약세 시나리오를 쉬운 말로
+검증: 성장 가설을 시험할 포인트를 쉬운 말로
 다음확인: 실적·이벤트 전에 볼 것
 마크다운·별표 없이.`;
     try{
